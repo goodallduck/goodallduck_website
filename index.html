@@ -3,1091 +3,926 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>꾸더덕(GoodAllDuck) — 크리에이티브 에이전시</title>
-  <meta name="description" content="꾸더덕은 유튜브 채널 운영, 영상 제작 외주, 이벤트 기획, 온라인 마케팅을 아우르는 크리에이티브 에이전시입니다.">
+  <title>꾸더덕 — GoodAllDuck</title>
+  <meta name="description" content="뉴미디어 콘텐츠 제작과 크리에이터 매니지먼트 기반의 크리에이티브 에이전시">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    /* =============================================
-       CSS 변수 (컬러 팔레트)
-       ============================================= */
+    /* ==============================================
+       TOKENS
+    =============================================== */
     :root {
-      --ivory:        #FFFBF0;   /* 오리 깃털 — 메인 배경 */
-      --ivory-dark:   #F5EDDA;   /* 보조 배경 */
-      --ivory-mid:    #EDE0C4;   /* 테두리, 구분선 */
-      --orange:       #FF8A00;   /* 오리 부리 — 포인트 컬러 */
-      --orange-light: #FFB347;   /* 밝은 오렌지 */
-      --orange-dark:  #D97000;   /* 어두운 오렌지 (호버) */
-      --duck-yellow:  #FFD966;   /* 오리 몸통 노랑 */
-      --brown-dark:   #2A1A06;   /* 진한 텍스트 */
-      --brown-mid:    #7A5C30;   /* 중간 텍스트 */
-      --brown-light:  #C4A06A;   /* 장식용 */
-      --white:        #FFFFFF;
-      --shadow:       rgba(42, 26, 6, 0.10);
-      --shadow-lg:    rgba(42, 26, 6, 0.18);
+      --bg:      #0B0B0B;
+      --bg2:     #111111;
+      --bg3:     #1A1A1A;
+      --white:   #FFFFFF;
+      --gray1:   #BBBBBB;
+      --gray2:   #666666;
+      --gray3:   #2A2A2A;
+      --accent:  #FF8A00;
+      --border:  rgba(255,255,255,0.08);
     }
 
-    /* =============================================
-       리셋 & 기본
-       ============================================= */
+    /* ==============================================
+       RESET
+    =============================================== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
     body {
       font-family: 'Noto Sans KR', sans-serif;
-      background: var(--ivory);
-      color: var(--brown-dark);
-      line-height: 1.6;
+      background: var(--bg);
+      color: var(--white);
       overflow-x: hidden;
+      line-height: 1.6;
     }
     a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; display: block; }
     ul { list-style: none; }
+    button { font-family: inherit; }
 
-    /* =============================================
-       유틸리티
-       ============================================= */
-    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-    .tag {
-      display: inline-block;
-      background: var(--orange);
-      color: #fff;
-      font-family: 'Poppins', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
+    /* ==============================================
+       CONTAINER  — 콘텐츠 영역 최대 너비 + 좌우 여백
+    =============================================== */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 80px;
+    }
+
+    /* ==============================================
+       PLACEHOLDER
+    =============================================== */
+    .ph {
+      background: var(--bg3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* 십자선 */
+    .ph::before, .ph::after {
+      content: '';
+      position: absolute;
+      background: var(--gray3);
+      pointer-events: none;
+    }
+    .ph::before { width: 1px; height: 36%; top: 32%; left: 50%; }
+    .ph::after  { width: 36%; height: 1px; top: 50%; left: 32%; }
+    .ph-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      padding: 4px 12px;
-      border-radius: 100px;
+      color: #444;
+      position: relative; z-index: 1;
     }
-    .tag.coming { background: var(--ivory-mid); color: var(--brown-mid); }
-    .section-head { text-align: center; margin-bottom: 56px; }
-    .section-head .tag { margin-bottom: 14px; }
-    .section-head h2 {
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 900;
-      line-height: 1.25;
-      color: var(--brown-dark);
-    }
-    .section-head p {
-      margin-top: 14px;
-      font-size: 1.05rem;
-      color: var(--brown-mid);
-      max-width: 560px;
-      margin-left: auto;
-      margin-right: auto;
+    .ph-size {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.55rem;
+      color: #333;
+      position: relative; z-index: 1;
     }
 
-    .btn {
+    /* ==============================================
+       NAVIGATION
+    =============================================== */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      transition: background .35s, border-color .35s;
+      border-bottom: 1px solid transparent;
+    }
+    #nav.scrolled {
+      background: rgba(11, 11, 11, .94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom-color: var(--border);
+    }
+    .nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 80px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-weight: 900;
+      font-size: 1.35rem;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    /* Links — right side */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: rgba(255,255,255,.45);
+      letter-spacing: 0.03em;
+      transition: color .2s;
+      position: relative;
+      padding-bottom: 2px;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 100%;
+      height: 1px;
+      background: var(--accent);
+      transition: right .25s ease;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { right: 0; }
+    .nav-links a.active { color: var(--white); }
+    .nav-links a.active::after { right: 0; }
+
+    /* Hamburger (mobile only) */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px; height: 1.5px;
+      background: var(--white);
+      transition: .3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 62px; left: 0; right: 0;
+      z-index: 999;
+      background: rgba(11,11,11,.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      flex-direction: column;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      padding: 16px 32px;
+      font-size: .95rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.7);
+      border-bottom: 1px solid var(--border);
+      transition: color .2s;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--white); }
+    .mobile-menu a.active { color: var(--white); }
+
+    /* ==============================================
+       HERO — 풀스크린 (좌우 여백 없음)
+    =============================================== */
+    #hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+    }
+    /* 미디어 영역: 화면 꽉 채움 */
+    .hero-media {
+      position: absolute;
+      inset: 0;
+    }
+    .hero-media .ph { width: 100%; height: 100%; background: var(--bg2); }
+    .hero-media .ph::before, .hero-media .ph::after { display: none; }
+    .hero-grid {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+    .hero-media-label {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      pointer-events: none;
+    }
+    .hero-gradient {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(11,11,11,.12) 0%,
+        rgba(11,11,11,.0)  40%,
+        rgba(11,11,11,.6)  78%,
+        rgba(11,11,11,.9)  100%
+      );
+    }
+    /* 텍스트 영역: 컨테이너 기준 좌우 여백 */
+    .hero-content {
+      position: absolute;
+      bottom: 80px;
+      left: 0; right: 0;
+    }
+    .hero-content .container { /* 이미 container로 감싸므로 여백 자동 적용 */ }
+    .hero-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.45);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px; height: 1px;
+      background: rgba(255,255,255,.3);
+    }
+    .hero-h1 {
+      font-size: clamp(3.2rem, 7vw, 8rem);
+      font-weight: 900;
+      line-height: 1.06;
+      letter-spacing: -0.025em;
+    }
+    .hero-h1 .accent { color: var(--accent); }
+    .hero-sub {
+      margin-top: 24px;
+      font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+      font-weight: 300;
+      color: rgba(255,255,255,.65);
+      line-height: 1.85;
+      max-width: 480px;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px; right: 80px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+    }
+    .scroll-bar { width: 36px; height: 1px; background: rgba(255,255,255,.2); }
+
+    /* ==============================================
+       SECTION — 공통 구조 (container 안에서 여백)
+    =============================================== */
+    .section { padding: 120px 0; }
+    .section-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gray1);
+      margin-bottom: 18px;
+    }
+    .section-h2 {
+      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+    }
+    .section-h2 .accent { color: var(--accent); }
+    .text-link {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 14px 32px;
-      border-radius: 100px;
-      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.4);
+      transition: color .2s;
+    }
+    .text-link .arr { transition: transform .2s; }
+    .text-link:hover { color: var(--white); }
+    .text-link:hover .arr { transform: translateX(4px); }
+
+    /* ==============================================
+       ABOUT
+    =============================================== */
+    #about { background: var(--bg2); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-body {
+      margin-top: 28px;
       font-size: 1rem;
+      font-weight: 300;
+      line-height: 2;
+      color: rgba(255,255,255,.68);
+    }
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 52px;
+      border-top: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+    }
+    .stat-box {
+      padding: 28px 24px;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+    .stat-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--white);
+    }
+    .stat-num sup { font-size: 1rem; color: var(--accent); margin-left: 2px; }
+    .stat-label {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--gray1);
+      margin-top: 10px;
+      line-height: 1.4;
+    }
+    .about-image { aspect-ratio: 3/4; }
+    .about-image .ph { width: 100%; height: 100%; }
+
+    /* ==============================================
+       CREATORS
+    =============================================== */
+    #creators { background: var(--bg); }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 52px;
+    }
+    .creators-featured {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .creator-featured-main {
+      aspect-ratio: 16/9;
+      position: relative;
+      overflow: hidden;
+    }
+    .creator-featured-main .ph { width: 100%; height: 100%; }
+    .creator-side-stack { display: grid; grid-template-rows: 1fr 1fr; gap: 14px; }
+    .creator-side-card { position: relative; overflow: hidden; }
+    .creator-side-card .ph { width: 100%; height: 100%; min-height: 150px; }
+    .creator-card-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 16px 18px;
+      background: linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 100%);
+    }
+    .creator-card-name { font-size: .88rem; font-weight: 700; }
+    .creator-card-sub {
+      font-size: .72rem;
+      color: rgba(255,255,255,.5);
+      margin-top: 3px;
+      font-family: 'Inter', sans-serif;
+    }
+    .creators-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .creator-thumb {
+      aspect-ratio: 1;
+      position: relative;
+      overflow: hidden;
       cursor: pointer;
-      transition: all .25s ease;
-      border: 2px solid transparent;
-      white-space: nowrap;
     }
-    .btn-primary {
-      background: var(--orange);
-      color: #fff;
-    }
-    .btn-primary:hover { background: var(--orange-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,138,0,.35); }
-    .btn-outline {
-      background: transparent;
-      color: var(--brown-dark);
-      border-color: var(--ivory-mid);
-    }
-    .btn-outline:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-2px); }
-
-    /* =============================================
-       네비게이션
-       ============================================= */
-    #navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      background: rgba(255, 251, 240, 0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid transparent;
-      transition: border-color .3s, box-shadow .3s;
-    }
-    #navbar.scrolled {
-      border-bottom-color: var(--ivory-mid);
-      box-shadow: 0 4px 20px var(--shadow);
-    }
-    .nav-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 68px;
-    }
-    .nav-logo {
-      display: flex; align-items: center; gap: 10px;
-      font-weight: 900; font-size: 1.25rem;
-    }
-    .nav-logo svg { width: 44px; height: 44px; }
-    .nav-logo .ko { color: var(--brown-dark); }
-    .nav-logo .en { color: var(--orange); font-family: 'Poppins', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: .04em; }
-    .nav-links {
-      display: flex; align-items: center; gap: 36px;
-      font-size: 0.95rem; font-weight: 500;
-    }
-    .nav-links a { color: var(--brown-mid); transition: color .2s; }
-    .nav-links a:hover, .nav-links a.active { color: var(--orange); }
-    .nav-cta { display: flex; align-items: center; gap: 10px; }
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
-    .hamburger span { display: block; width: 24px; height: 2px; background: var(--brown-dark); transition: .3s; border-radius: 2px; }
-
-    /* mobile nav */
-    .mobile-nav {
-      display: none; position: fixed; inset: 0; z-index: 999;
-      background: var(--ivory); padding: 100px 24px 40px;
-      flex-direction: column; align-items: center; gap: 32px;
-    }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a { font-size: 1.5rem; font-weight: 700; color: var(--brown-dark); }
-    .mobile-nav a:hover { color: var(--orange); }
-
-    /* =============================================
-       HERO
-       ============================================= */
-    #hero {
-      min-height: 100vh;
-      display: flex; align-items: center;
-      padding: 100px 0 80px;
-      background:
-        radial-gradient(ellipse 70% 60% at 80% 50%, rgba(255,217,102,.18) 0%, transparent 65%),
-        radial-gradient(ellipse 50% 50% at 20% 80%, rgba(255,138,0,.08) 0%, transparent 60%),
-        var(--ivory);
-      position: relative; overflow: hidden;
-    }
-    .hero-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      align-items: center; gap: 64px;
-    }
-    .hero-text .tag { margin-bottom: 20px; }
-    .hero-text h1 {
-      font-size: clamp(2rem, 5vw, 3.6rem);
-      font-weight: 900; line-height: 1.2;
-      letter-spacing: -0.02em;
-    }
-    .hero-text h1 .highlight { color: var(--orange); }
-    .hero-text p {
-      margin-top: 22px; font-size: 1.1rem;
-      color: var(--brown-mid); line-height: 1.75;
-      max-width: 480px;
-    }
-    .hero-btns { margin-top: 36px; display: flex; gap: 14px; flex-wrap: wrap; }
-    .hero-stats {
-      display: flex; gap: 32px; margin-top: 48px;
-      padding-top: 32px; border-top: 1px solid var(--ivory-mid);
-    }
-    .stat-item { text-align: left; }
-    .stat-num { font-size: 1.8rem; font-weight: 900; color: var(--orange); font-family: 'Poppins', sans-serif; }
-    .stat-label { font-size: 0.8rem; color: var(--brown-mid); margin-top: 2px; }
-
-    /* Duck illustration */
-    .hero-visual {
-      display: flex; justify-content: center; align-items: center;
-      position: relative;
-    }
-    .duck-wrap {
-      position: relative; display: inline-block;
-      animation: float 3.5s ease-in-out infinite;
-    }
-    .duck-wrap svg { width: clamp(280px, 40vw, 440px); height: auto; filter: drop-shadow(0 20px 40px rgba(255,138,0,.2)); }
-    .duck-bubble {
-      position: absolute; top: 10%; right: -10%;
-      background: var(--white); border-radius: 20px;
-      padding: 12px 18px; font-size: 0.9rem; font-weight: 700;
-      box-shadow: 0 8px 24px var(--shadow);
-      white-space: nowrap; animation: bubble 3.5s ease-in-out infinite;
-    }
-    .duck-bubble::after {
-      content: ''; position: absolute; left: -8px; top: 50%;
-      transform: translateY(-50%);
-      border: 8px solid transparent;
-      border-right-color: var(--white);
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-16px); }
-    }
-    @keyframes bubble {
-      0%, 100% { transform: translateY(0) rotate(-2deg); }
-      50% { transform: translateY(-10px) rotate(2deg); }
-    }
-
-    /* =============================================
-       SERVICES
-       ============================================= */
-    #services { padding: 100px 0; background: var(--ivory); }
-    .services-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px;
-    }
-    .service-card {
-      background: var(--white);
-      border: 1.5px solid var(--ivory-mid);
-      border-radius: 24px;
-      padding: 40px;
-      transition: all .3s ease;
-      position: relative; overflow: hidden;
-    }
-    .service-card:hover {
-      border-color: var(--orange-light);
-      transform: translateY(-6px);
-      box-shadow: 0 20px 48px var(--shadow-lg);
-    }
-    .service-card.active::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 4px;
-      background: linear-gradient(90deg, var(--orange), var(--duck-yellow));
-    }
-    .service-card.inactive {
-      opacity: 0.55;
-      filter: grayscale(.4);
-    }
-    .service-card.inactive:hover { transform: none; box-shadow: none; }
-
-    .service-icon {
-      width: 64px; height: 64px; border-radius: 18px;
+    .creator-thumb .ph { width: 100%; height: 100%; }
+    .creator-thumb-overlay {
+      position: absolute; inset: 0;
+      background: rgba(11,11,11,0);
+      transition: background .3s;
       display: flex; align-items: center; justify-content: center;
-      font-size: 2rem; margin-bottom: 22px;
-      background: var(--ivory-dark);
     }
-    .service-card.active .service-icon { background: rgba(255,138,0,.12); }
-    .service-card h3 { font-size: 1.35rem; font-weight: 800; margin-bottom: 10px; }
-    .service-card .desc { font-size: 0.95rem; color: var(--brown-mid); line-height: 1.7; margin-bottom: 22px; }
-    .service-features { display: flex; flex-direction: column; gap: 8px; }
-    .feature-item {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 0.88rem; color: var(--brown-mid);
+    .creator-thumb:hover .creator-thumb-overlay { background: rgba(11,11,11,.6); }
+    .creator-thumb-label {
+      font-size: .75rem;
+      font-weight: 700;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: all .25s;
+      letter-spacing: .02em;
     }
-    .feature-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--orange); flex-shrink: 0;
+    .creator-thumb:hover .creator-thumb-label { opacity: 1; transform: translateY(0); }
+    .creator-add {
+      aspect-ratio: 1;
+      border: 1px dashed var(--gray3);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 10px; cursor: pointer;
+      transition: border-color .2s;
     }
-    .feature-item span { display: flex; align-items: center; gap: 8px; }
+    .creator-add:hover { border-color: var(--gray2); }
+    .creator-add-icon { font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 300; color: var(--gray2); line-height: 1; }
+    .creator-add-label { font-family: 'Inter', sans-serif; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray2); }
 
-    .coming-badge {
-      position: absolute; top: 20px; right: 20px;
-      background: var(--ivory-dark); color: var(--brown-mid);
-      font-size: 0.72rem; font-weight: 700;
-      padding: 4px 12px; border-radius: 100px;
-      border: 1px solid var(--ivory-mid);
-    }
-
-    .service-cta {
-      display: inline-flex; align-items: center; gap: 6px;
-      margin-top: 28px; font-weight: 700; font-size: 0.9rem;
-      color: var(--orange); transition: gap .2s;
-    }
-    .service-cta:hover { gap: 10px; }
-
-    /* =============================================
-       PROCESS
-       ============================================= */
-    #process { padding: 100px 0; background: var(--ivory-dark); }
-    .process-steps {
-      display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
-      position: relative;
-    }
-    .process-steps::before {
-      content: '';
-      position: absolute; top: 32px; left: 60px; right: 60px; height: 2px;
-      background: linear-gradient(90deg, var(--orange), var(--duck-yellow));
-      z-index: 0;
-    }
-    .step {
-      text-align: center; position: relative; z-index: 1;
-    }
-    .step-num {
-      width: 64px; height: 64px; border-radius: 50%;
-      background: var(--white); border: 3px solid var(--orange);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; margin: 0 auto 16px;
-      box-shadow: 0 4px 16px rgba(255,138,0,.2);
-      transition: transform .3s;
-    }
-    .step:hover .step-num { transform: scale(1.1); }
-    .step h4 { font-size: 0.92rem; font-weight: 800; margin-bottom: 6px; }
-    .step p { font-size: 0.8rem; color: var(--brown-mid); line-height: 1.5; }
-
-    /* =============================================
+    /* ==============================================
        PORTFOLIO
-       ============================================= */
-    #portfolio { padding: 100px 0; }
+    =============================================== */
+    #portfolio { background: var(--bg2); }
+    .portfolio-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 52px;
+    }
+    .portfolio-intro {
+      max-width: 500px;
+      font-size: .95rem;
+      font-weight: 300;
+      color: rgba(255,255,255,.6);
+      line-height: 1.85;
+      margin-top: 18px;
+    }
     .portfolio-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
     }
-    .portfolio-item {
-      border-radius: 20px; overflow: hidden;
-      aspect-ratio: 16/10;
-      background: linear-gradient(135deg, var(--ivory-dark), var(--ivory-mid));
-      position: relative; cursor: pointer;
-      transition: transform .3s, box-shadow .3s;
-      border: 1.5px solid var(--ivory-mid);
+    .p-item {
+      position: relative; overflow: hidden; cursor: pointer;
     }
-    .portfolio-item:hover { transform: scale(1.03); box-shadow: 0 16px 40px var(--shadow-lg); }
-    .portfolio-item.large { grid-column: span 2; }
-    .portfolio-placeholder {
-      width: 100%; height: 100%;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 8px;
-    }
-    .portfolio-placeholder .icon { font-size: 2.5rem; }
-    .portfolio-placeholder .label { font-size: 0.85rem; font-weight: 700; color: var(--brown-mid); }
-    .portfolio-overlay {
+    .p-item .ph { width: 100%; height: 100%; min-height: 80px; }
+    .p-item:nth-child(1) { grid-column: span 7; aspect-ratio: 16/9; }
+    .p-item:nth-child(2) { grid-column: span 5; aspect-ratio: 4/3; }
+    .p-item:nth-child(3) { grid-column: span 4; aspect-ratio: 4/3; }
+    .p-item:nth-child(4) { grid-column: span 4; aspect-ratio: 4/3; }
+    .p-item:nth-child(5) { grid-column: span 4; aspect-ratio: 4/3; }
+    .p-overlay {
       position: absolute; inset: 0;
-      background: rgba(42,26,6,.7);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      opacity: 0; transition: opacity .3s;
-      color: #fff;
+      background: rgba(11,11,11,0);
+      transition: background .3s;
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 20px;
     }
-    .portfolio-item:hover .portfolio-overlay { opacity: 1; }
-    .portfolio-overlay h4 { font-size: 1.1rem; font-weight: 800; }
-    .portfolio-overlay p { font-size: 0.85rem; opacity: .8; margin-top: 4px; }
-    .portfolio-cta { text-align: center; margin-top: 40px; }
+    .p-item:hover .p-overlay { background: rgba(11,11,11,.72); }
+    .p-cat {
+      font-family: 'Inter', sans-serif; font-size: .65rem; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--accent);
+      opacity: 0; transform: translateY(8px); transition: all .25s .05s;
+    }
+    .p-title {
+      font-size: .9rem; font-weight: 700; margin-top: 4px;
+      opacity: 0; transform: translateY(8px); transition: all .25s;
+    }
+    .p-item:hover .p-cat,
+    .p-item:hover .p-title { opacity: 1; transform: translateY(0); }
 
-    /* =============================================
-       VISION / ABOUT
-       ============================================= */
-    #vision {
-      padding: 100px 0;
-      background:
-        radial-gradient(ellipse 60% 70% at 20% 50%, rgba(255,217,102,.15) 0%, transparent 60%),
-        var(--ivory-dark);
-    }
-    .vision-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      align-items: center; gap: 72px;
-    }
-    .vision-text h2 {
-      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-      font-weight: 900; line-height: 1.25; margin-bottom: 20px;
-    }
-    .vision-text h2 .highlight { color: var(--orange); }
-    .vision-text p { color: var(--brown-mid); line-height: 1.8; margin-bottom: 16px; font-size: 1rem; }
-    .vision-pillars { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
-    .pillar {
-      display: flex; align-items: flex-start; gap: 16px;
-      background: var(--white); border-radius: 16px;
-      padding: 18px 20px; border: 1px solid var(--ivory-mid);
-      transition: border-color .2s, transform .2s;
-    }
-    .pillar:hover { border-color: var(--orange-light); transform: translateX(4px); }
-    .pillar-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
-    .pillar-text h4 { font-size: 0.95rem; font-weight: 800; margin-bottom: 4px; }
-    .pillar-text p { font-size: 0.85rem; color: var(--brown-mid); }
-    .vision-art {
-      display: flex; align-items: center; justify-content: center;
-    }
-    .mcn-card {
-      background: var(--white); border-radius: 28px;
-      padding: 48px; text-align: center;
-      box-shadow: 0 24px 64px var(--shadow-lg);
-      border: 1px solid var(--ivory-mid);
-      max-width: 360px; width: 100%;
-    }
-    .mcn-card .duck-icon { font-size: 4rem; margin-bottom: 16px; line-height: 1; }
-    .mcn-card h3 { font-size: 1.4rem; font-weight: 900; color: var(--orange); font-family: 'Poppins', sans-serif; }
-    .mcn-card .sub { font-size: 0.9rem; color: var(--brown-mid); margin-top: 6px; margin-bottom: 24px; }
-    .mcn-creators { display: flex; justify-content: center; margin-bottom: 16px; }
-    .creator-avatar {
-      width: 44px; height: 44px; border-radius: 50%;
-      border: 3px solid var(--white);
-      background: linear-gradient(135deg, var(--duck-yellow), var(--orange-light));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem;
-      margin-left: -10px;
-    }
-    .creator-avatar:first-child { margin-left: 0; }
-    .mcn-tagline { font-size: 0.85rem; color: var(--brown-mid); }
-    .mcn-tagline strong { color: var(--orange); }
-
-    /* =============================================
+    /* ==============================================
        CONTACT
-       ============================================= */
-    #contact { padding: 100px 0; }
+    =============================================== */
+    #contact { background: var(--bg); }
     .contact-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 72px; align-items: start;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: start;
     }
-    .contact-info h2 {
-      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-      font-weight: 900; line-height: 1.3; margin-bottom: 16px;
+    .contact-desc {
+      margin-top: 24px;
+      font-size: .95rem;
+      font-weight: 300;
+      line-height: 1.95;
+      color: rgba(255,255,255,.62);
     }
-    .contact-info p { color: var(--brown-mid); line-height: 1.8; font-size: 1rem; margin-bottom: 36px; }
-    .contact-items { display: flex; flex-direction: column; gap: 14px; }
-    .contact-item {
-      display: flex; align-items: center; gap: 14px;
-      font-size: 0.92rem;
+    .contact-info-list {
+      margin-top: 48px;
+      border-top: 1px solid var(--border);
     }
-    .contact-item-icon {
-      width: 44px; height: 44px; border-radius: 12px;
-      background: rgba(255,138,0,.12); display: flex;
-      align-items: center; justify-content: center;
-      font-size: 1.1rem; flex-shrink: 0;
+    .contact-info-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 0; border-bottom: 1px solid var(--border);
     }
-    .contact-item-text .label { font-size: 0.78rem; color: var(--brown-mid); }
-    .contact-item-text .value { font-weight: 700; }
+    .ci-label {
+      font-family: 'Inter', sans-serif; font-size: .65rem; font-weight: 600;
+      letter-spacing: .15em; text-transform: uppercase; color: var(--gray1);
+    }
+    .ci-value {
+      font-size: .9rem; font-weight: 500;
+      color: var(--white);
+    }
+    .ci-value a {
+      color: var(--white);
+      transition: color .2s;
+    }
+    .ci-value a:hover { color: var(--accent); }
 
-    .contact-form {
-      background: var(--white); border-radius: 24px;
-      padding: 40px; border: 1.5px solid var(--ivory-mid);
-      box-shadow: 0 12px 40px var(--shadow);
-    }
-    .form-group { margin-bottom: 20px; }
-    .form-group label {
-      display: block; font-size: 0.85rem;
-      font-weight: 700; margin-bottom: 8px; color: var(--brown-dark);
-    }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%; padding: 12px 16px;
-      background: var(--ivory);
-      border: 1.5px solid var(--ivory-mid);
-      border-radius: 12px;
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 0.95rem; color: var(--brown-dark);
-      transition: border-color .2s;
-      outline: none;
-    }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus { border-color: var(--orange); }
-    .form-group textarea { height: 120px; resize: vertical; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .form-submit { width: 100%; padding: 16px; font-size: 1rem; font-weight: 800; }
-
-    /* =============================================
+    /* ==============================================
        FOOTER
-       ============================================= */
-    footer {
-      background: var(--brown-dark); color: rgba(255,251,240,.75);
-      padding: 60px 0 32px;
-    }
+    =============================================== */
+    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 40px 0; }
     .footer-inner {
-      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 48px; padding-bottom: 40px;
-      border-bottom: 1px solid rgba(255,251,240,.12);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
     }
-    .footer-brand .logo-text {
-      font-weight: 900; font-size: 1.3rem;
-      color: var(--ivory);
-      display: flex; align-items: center; gap: 8px;
-      margin-bottom: 12px;
+    .footer-logo { font-size: 1.05rem; font-weight: 900; letter-spacing: -0.02em; }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a {
+      font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 500;
+      letter-spacing: .05em; color: var(--gray2); transition: color .2s;
     }
-    .footer-brand .logo-text .en { color: var(--orange); font-family: 'Poppins', sans-serif; font-size: 0.85rem; }
-    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 280px; }
-    .footer-brand .social { display: flex; gap: 12px; margin-top: 20px; }
-    .social-btn {
-      width: 40px; height: 40px; border-radius: 12px;
-      background: rgba(255,251,240,.1);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; transition: background .2s;
-    }
-    .social-btn:hover { background: var(--orange); }
-    .footer-col h5 {
-      font-size: 0.82rem; font-weight: 700;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: var(--ivory); margin-bottom: 16px;
-    }
-    .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
-    .footer-col ul li { font-size: 0.88rem; }
-    .footer-col ul li a { transition: color .2s; }
-    .footer-col ul li a:hover { color: var(--orange); }
-    .footer-bottom {
-      padding-top: 28px;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 12px; font-size: 0.82rem;
-    }
-    .footer-bottom .domain { color: var(--orange); font-family: 'Poppins', sans-serif; font-weight: 600; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-copy { font-family: 'Inter', sans-serif; font-size: .68rem; color: var(--gray2); }
 
-    /* =============================================
-       SCROLL ANIMATIONS
-       ============================================= */
-    .fade-in {
-      opacity: 0; transform: translateY(30px);
-      transition: opacity .6s ease, transform .6s ease;
+    /* ==============================================
+       SCROLL REVEAL
+    =============================================== */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
     }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .reveal.on { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: .1s; }
+    .reveal-d2 { transition-delay: .2s; }
 
-    /* =============================================
+    /* ==============================================
        RESPONSIVE
-       ============================================= */
-    @media (max-width: 900px) {
-      .hero-inner { grid-template-columns: 1fr; text-align: center; }
-      .hero-text p { margin-left: auto; margin-right: auto; }
-      .hero-btns { justify-content: center; }
-      .hero-stats { justify-content: center; }
-      .hero-visual { display: none; }
-      .services-grid { grid-template-columns: 1fr; }
-      .process-steps { grid-template-columns: 1fr 1fr; gap: 24px; }
-      .process-steps::before { display: none; }
-      .portfolio-grid { grid-template-columns: 1fr 1fr; }
-      .portfolio-item.large { grid-column: span 1; }
-      .vision-inner { grid-template-columns: 1fr; }
-      .vision-art { display: none; }
-      .contact-inner { grid-template-columns: 1fr; }
-      .footer-inner { grid-template-columns: 1fr 1fr; }
-      .nav-links, .nav-cta .btn { display: none; }
-      .hamburger { display: flex; }
+    =============================================== */
+    @media (max-width: 1200px) {
+      .container { padding: 0 48px; }
+      .nav-inner { padding: 0 48px; }
+      .hero-scroll { right: 48px; }
     }
-    @media (max-width: 560px) {
-      .portfolio-grid { grid-template-columns: 1fr; }
-      .footer-inner { grid-template-columns: 1fr; }
-      .form-row { grid-template-columns: 1fr; }
-      .process-steps { grid-template-columns: 1fr; }
-      .hero-stats { flex-direction: column; gap: 16px; }
+    @media (max-width: 900px) {
+      .container { padding: 0 24px; }
+      .nav-inner { padding: 0 24px; }
+      .hero-scroll { display: none; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-image { display: none; }
+      .creators-featured { grid-template-columns: 1fr; }
+      .creator-side-stack { grid-template-rows: unset; grid-template-columns: 1fr 1fr; }
+      .creator-side-card .ph { min-height: 120px; }
+      .creators-grid { grid-template-columns: repeat(2, 1fr); }
+      .portfolio-grid { grid-template-columns: 1fr 1fr; }
+      .p-item { grid-column: span 1 !important; aspect-ratio: 16/9 !important; }
+      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+      .section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .portfolio-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+    @media (max-width: 600px) {
+      .section { padding: 80px 0; }
+      .hero-content { bottom: 48px; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      .creators-grid { grid-template-columns: 1fr 1fr; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .footer-links { flex-wrap: wrap; gap: 16px; }
+      .mobile-menu a { padding: 14px 24px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ======= NAVBAR ======= -->
-  <nav id="navbar">
-    <div class="container">
-      <div class="nav-inner">
-        <a href="#" class="nav-logo">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="50" cy="62" rx="32" ry="26" fill="#FFD966"/>
-            <circle cx="68" cy="42" r="18" fill="#FFE080"/>
-            <rect x="52" y="28" width="32" height="4" rx="2" fill="#2A1A06"/>
-            <rect x="58" y="14" width="20" height="16" rx="4" fill="#2A1A06"/>
-            <rect x="58" y="25" width="20" height="4" rx="1" fill="#FF8A00"/>
-            <ellipse cx="86" cy="44" rx="10" ry="6" fill="#FF8A00"/>
-            <circle cx="72" cy="38" r="3" fill="#2A1A06"/>
-            <circle cx="73" cy="37" r="1" fill="white"/>
-            <ellipse cx="36" cy="64" rx="14" ry="8" fill="#F5C800" transform="rotate(-20 36 64)"/>
-            <ellipse cx="42" cy="86" rx="10" ry="4" fill="#FF8A00" transform="rotate(-10 42 86)"/>
-            <ellipse cx="60" cy="87" rx="10" ry="4" fill="#FF8A00" transform="rotate(10 60 87)"/>
-          </svg>
-          <div>
-            <div class="ko">꾸더덕</div>
-            <div class="en">GoodAllDuck</div>
-          </div>
-        </a>
-
-        <ul class="nav-links">
-          <li><a href="#services">서비스</a></li>
-          <li><a href="#process">프로세스</a></li>
-          <li><a href="#portfolio">작업물</a></li>
-          <li><a href="#vision">비전</a></li>
-          <li><a href="#contact">연락하기</a></li>
-        </ul>
-
-        <div class="nav-cta">
-          <a href="#contact" class="btn btn-primary">문의하기</a>
-        </div>
-
-        <div class="hamburger" id="hamburger" onclick="toggleMobile()">
-          <span></span><span></span><span></span>
-        </div>
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">꾸더덕</a>
+      <ul class="nav-links">
+        <li><a href="#about">꾸더덕</a></li>
+        <li><a href="#creators">Creators</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu(this)">
+        <span></span><span></span><span></span>
       </div>
     </div>
   </nav>
-
-  <div class="mobile-nav" id="mobileNav">
-    <a href="#services" onclick="toggleMobile()">서비스</a>
-    <a href="#process" onclick="toggleMobile()">프로세스</a>
-    <a href="#portfolio" onclick="toggleMobile()">작업물</a>
-    <a href="#vision" onclick="toggleMobile()">비전</a>
-    <a href="#contact" onclick="toggleMobile()">연락하기</a>
-    <a href="#contact" class="btn btn-primary" onclick="toggleMobile()">문의하기</a>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about"     onclick="closeMenu()">꾸더덕</a>
+    <a href="#creators"  onclick="closeMenu()">Creators</a>
+    <a href="#portfolio" onclick="closeMenu()">Portfolio</a>
+    <a href="#contact"   onclick="closeMenu()">Contact</a>
   </div>
 
-  <!-- ======= HERO ======= -->
-  <section id="hero">
+  <!-- HERO — 풀스크린, 텍스트만 container로 여백 -->
+  <section id="home">
+    <div id="hero">
+      <div class="hero-media">
+        <div class="ph" style="width:100%;height:100%;"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-media-label">
+          <span class="ph-label">Hero Video / Image</span>
+          <span class="ph-size">1920 × 1080</span>
+        </div>
+      </div>
+      <div class="hero-gradient"></div>
+      <div class="hero-content">
+        <div class="container">
+          <p class="hero-eyebrow">Creative Agency · Seoul, Korea</p>
+          <h1 class="hero-h1">
+            콘텐츠로<br>세상을<br><span class="accent">움직이다</span>
+          </h1>
+          <p class="hero-sub">
+            꾸더덕은 유튜브 채널 운영부터 영상 제작까지,<br>
+            브랜드의 이야기를 가장 강렬하게 전달합니다.
+          </p>
+        </div>
+      </div>
+      <div class="hero-scroll">
+        <div class="scroll-bar"></div>Scroll
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
     <div class="container">
-      <div class="hero-inner">
-        <div class="hero-text fade-in">
-          <span class="tag">크리에이티브 에이전시</span>
-          <h1>콘텐츠에<br><span class="highlight">날개</span>를 달다</h1>
-          <p>꾸더덕은 유튜브 채널 운영부터 영상 제작 외주까지,<br>당신의 브랜드 이야기를 유쾌하고 전문적으로 풀어냅니다.</p>
-          <div class="hero-btns">
-            <a href="#services" class="btn btn-primary">서비스 알아보기 →</a>
-            <a href="#portfolio" class="btn btn-outline">작업물 보기</a>
-          </div>
-          <div class="hero-stats">
-            <div class="stat-item">
-              <div class="stat-num">100+</div>
+      <div class="about-grid">
+        <div class="reveal">
+          <p class="section-eyebrow">About GoodAllDuck</p>
+          <h2 class="section-h2">크리에이티브<br>에이전시 <span class="accent">꾸더덕</span></h2>
+          <p class="about-body">
+            꾸더덕(GoodAllDuck)은 자체 유튜브 채널 운영을 핵심 축으로,<br>
+            영상 제작 외주·이벤트 기획·온라인 마케팅을 아우르는 크리에이티브 에이전시입니다.<br>
+            장기적으로는 MCN 형태로 성장해 여러 크리에이터를 아우르는<br>
+            종합 미디어 기획사로 발전하는 것을 목표로 합니다.
+          </p>
+          <div class="about-stats">
+            <div class="stat-box">
+              <div class="stat-num">100<sup>+</sup></div>
               <div class="stat-label">영상 제작 건수</div>
             </div>
-            <div class="stat-item">
-              <div class="stat-num">20+</div>
+            <div class="stat-box">
+              <div class="stat-num">20<sup>+</sup></div>
               <div class="stat-label">파트너 브랜드</div>
             </div>
-            <div class="stat-item">
+            <div class="stat-box">
               <div class="stat-num">MCN</div>
               <div class="stat-label">성장 목표</div>
             </div>
-          </div>
-        </div>
-
-        <div class="hero-visual fade-in">
-          <div class="duck-wrap">
-            <div class="duck-bubble">꽥! 잘 부탁드려요 🎬</div>
-            <svg viewBox="0 0 400 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="200" cy="400" rx="100" ry="14" fill="rgba(42,26,6,.1)"/>
-              <ellipse cx="195" cy="290" rx="120" ry="100" fill="#FFD966"/>
-              <ellipse cx="195" cy="310" rx="75" ry="65" fill="#FFF0A0"/>
-              <circle cx="260" cy="180" r="75" fill="#FFE080"/>
-              <rect x="195" y="116" width="130" height="14" rx="7" fill="#2A1A06"/>
-              <rect x="218" y="56" width="86" height="64" rx="14" fill="#2A1A06"/>
-              <rect x="218" y="108" width="86" height="14" rx="4" fill="#FF8A00"/>
-              <rect x="228" y="66" width="16" height="36" rx="8" fill="rgba(255,255,255,.12)"/>
-              <path d="M330 185 Q362 180 368 192 Q362 204 330 200 Z" fill="#FF8A00"/>
-              <path d="M330 192 Q362 190 368 192" stroke="#D97000" stroke-width="1.5"/>
-              <circle cx="276" cy="168" r="13" fill="white"/>
-              <circle cx="280" cy="170" r="8" fill="#2A1A06"/>
-              <circle cx="283" cy="167" r="3" fill="white"/>
-              <ellipse cx="112" cy="296" rx="52" ry="30" fill="#F5C800" transform="rotate(-25 112 296)"/>
-              <ellipse cx="284" cy="300" rx="44" ry="24" fill="#F5C800" transform="rotate(20 284 300)"/>
-              <path d="M160 380 Q148 396 130 398 Q120 396 122 388 Q140 382 160 375Z" fill="#FF8A00"/>
-              <path d="M230 382 Q218 398 200 400 Q190 398 192 390 Q210 384 230 377Z" fill="#FF8A00"/>
-              <ellipse cx="232" cy="194" r="14" fill="rgba(255,138,0,.22)"/>
-              <text x="60" y="120" font-size="22" fill="#FF8A00" opacity=".6">✦</text>
-              <text x="340" y="280" font-size="16" fill="#FFD966" opacity=".7">✦</text>
-              <text x="80" y="330" font-size="14" fill="#FF8A00" opacity=".5">✦</text>
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======= SERVICES ======= -->
-  <section id="services">
-    <div class="container">
-      <div class="section-head fade-in">
-        <span class="tag">Services</span>
-        <h2>꾸더덕이 도와드릴게요</h2>
-        <p>유튜브 채널 운영과 영상 제작 외주를 중심으로,<br>콘텐츠의 처음부터 끝까지 함께합니다.</p>
-      </div>
-
-      <div class="services-grid">
-
-        <!-- ✅ 서비스 1: 유튜브 채널 운영 (ACTIVE) -->
-        <div class="service-card active fade-in">
-          <div class="service-icon">📺</div>
-          <span class="tag">대표 서비스</span>
-          <h3 style="margin-top:12px">유튜브 채널 운영</h3>
-          <p class="desc">기획부터 업로드까지 채널 전체를 관리해드립니다. 알고리즘에 맞는 콘텐츠 전략으로 구독자를 꾸준히 늘려 나가요.</p>
-          <div class="service-features">
-            <div class="feature-item"><span><span class="feature-dot"></span>채널 방향 설정 &amp; 브랜딩</span></div>
-            <div class="feature-item"><span><span class="feature-dot"></span>콘텐츠 기획 &amp; 시나리오</span></div>
-            <div class="feature-item"><span><span class="feature-dot"></span>촬영 · 편집 · 자막</span></div>
-            <div class="feature-item"><span><span class="feature-dot"></span>썸네일 &amp; 채널 아트 디자인</span></div>
-            <div class="feature-item"><span><span class="feature-dot"></span>성장 분석 &amp; 월간 리포팅</span></div>
-          </div>
-          <a href="#contact" class="service-cta">상담 문의하기 →</a>
-        </div>
-
-        <!-- ✅ 서비스 2: 영상 제작 외주 (ACTIVE) -->
-        <div class="service-card active fade-in">
-          <div class="service-icon">🎬</div>
-          <span class="tag">대표 서비스</span>
-          <h3 style="margin-top:12px">영상 제작 외주</h3>
-          <p class="desc">브랜드의 이야기를 영상으로 담아드립니다. 짧은 클립부터 본격 홍보 영상까지, 목적에 맞게 제작해드려요.</p>
-          <div class="service-features">
-            <div class="feature-item"><span><span class="feature-dot"></span>브랜드 &amp; 홍보 영상</span></div>
-            <div class="feature-item"><span><span class="feature-dot"></span>유튜브 콘텐츠 제작</span></div>
-            <div class="feature-item"><span><span class="feature-dot"></span>인터뷰 &amp; 다큐멘터리</span></div>
-            <div class="feature-item"><span><span class="feature-dot"></span>모션 그래픽 &amp; 애니메이션</span></div>
-            <div class="feature-item"><span><span class="feature-dot"></span>숏폼 · 릴스 · 쇼츠</span></div>
-          </div>
-          <a href="#contact" class="service-cta">제작 문의하기 →</a>
-        </div>
-
-        <!-- 🔒 서비스 3: 이벤트 기획 (COMING SOON — data-service="events" 로 비활성화 가능) -->
-        <div class="service-card inactive" data-service="events" id="serviceEvents">
-          <div class="coming-badge">Coming Soon</div>
-          <div class="service-icon">🎪</div>
-          <h3>온/오프라인 이벤트 기획</h3>
-          <p class="desc">팝업, 팬미팅, 기업 행사 등 다양한 이벤트를 기획하고 운영합니다. 현장 경험을 콘텐츠로 연결하는 꾸더덕만의 방식으로.</p>
-          <div class="service-features">
-            <div class="feature-item"><span><span class="feature-dot"></span>이벤트 기획 &amp; 운영</span></div>
-            <div class="feature-item"><span><span class="feature-dot"></span>공간 &amp; 무대 연출</span></div>
-            <div class="feature-item"><span><span class="feature-dot"></span>현장 영상 &amp; 포토</span></div>
-          </div>
-        </div>
-
-        <!-- 🔒 서비스 4: 온라인 마케팅 (COMING SOON — data-service="marketing" 으로 비활성화 가능) -->
-        <div class="service-card inactive" data-service="marketing" id="serviceMarketing">
-          <div class="coming-badge">Coming Soon</div>
-          <div class="service-icon">📣</div>
-          <h3>온라인 마케팅 컨설팅</h3>
-          <p class="desc">SNS 운영, 광고 집행, 인플루언서 연결까지. 디지털 공간에서 브랜드를 더 많은 사람에게 알리는 통합 마케팅 솔루션.</p>
-          <div class="service-features">
-            <div class="feature-item"><span><span class="feature-dot"></span>SNS 채널 운영 대행</span></div>
-            <div class="feature-item"><span><span class="feature-dot"></span>퍼포먼스 광고 집행</span></div>
-            <div class="feature-item"><span><span class="feature-dot"></span>인플루언서 매칭</span></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ======= PROCESS ======= -->
-  <section id="process">
-    <div class="container">
-      <div class="section-head fade-in">
-        <span class="tag">How We Work</span>
-        <h2>이렇게 함께해요</h2>
-        <p>처음 상담부터 최종 납품까지, 모든 과정을 함께합니다.</p>
-      </div>
-      <div class="process-steps">
-        <div class="step fade-in">
-          <div class="step-num">💬</div>
-          <h4>1. 상담 &amp; 기획</h4>
-          <p>첫 미팅에서 방향을 함께 잡아요. 목표와 예산을 솔직하게 이야기해주세요.</p>
-        </div>
-        <div class="step fade-in">
-          <div class="step-num">📋</div>
-          <h4>2. 기획안 제출</h4>
-          <p>맞춤 제안서와 견적서를 드려요. 꼼꼼하게 검토해주세요.</p>
-        </div>
-        <div class="step fade-in">
-          <div class="step-num">🎥</div>
-          <h4>3. 제작 &amp; 협업</h4>
-          <p>함께 소통하며 만들어갑니다. 중간 공유로 방향을 맞춰요.</p>
-        </div>
-        <div class="step fade-in">
-          <div class="step-num">✏️</div>
-          <h4>4. 검토 &amp; 수정</h4>
-          <p>피드백을 꼼꼼하게 반영합니다. 만족스러울 때까지 다듬어요.</p>
-        </div>
-        <div class="step fade-in">
-          <div class="step-num">🎉</div>
-          <h4>5. 최종 납품</h4>
-          <p>완성된 결과물을 전달드려요. 이후 지원도 함께합니다.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======= PORTFOLIO ======= -->
-  <section id="portfolio">
-    <div class="container">
-      <div class="section-head fade-in">
-        <span class="tag">Portfolio</span>
-        <h2>꾸더덕의 작업물</h2>
-        <p>다양한 브랜드와 함께 만들어온 콘텐츠를 소개합니다.</p>
-      </div>
-
-      <div class="portfolio-grid fade-in">
-        <div class="portfolio-item large" style="background: linear-gradient(135deg, #FFE8B0, #FFD060);">
-          <div class="portfolio-placeholder">
-            <div class="icon">🎬</div>
-            <div class="label">브랜드 홍보 영상</div>
-          </div>
-          <div class="portfolio-overlay">
-            <h4>브랜드 스토리 캠페인</h4>
-            <p>2024 · 영상 제작</p>
-          </div>
-        </div>
-        <div class="portfolio-item" style="background: linear-gradient(135deg, #FFF0C0, #FFE080);">
-          <div class="portfolio-placeholder">
-            <div class="icon">📺</div>
-            <div class="label">유튜브 채널 운영</div>
-          </div>
-          <div class="portfolio-overlay">
-            <h4>라이프스타일 채널</h4>
-            <p>2024 · 채널 운영</p>
-          </div>
-        </div>
-        <div class="portfolio-item" style="background: linear-gradient(135deg, #FFD9A0, #FFBE50);">
-          <div class="portfolio-placeholder">
-            <div class="icon">✂️</div>
-            <div class="label">숏폼 콘텐츠</div>
-          </div>
-          <div class="portfolio-overlay">
-            <h4>쇼츠 시리즈</h4>
-            <p>2024 · 숏폼</p>
-          </div>
-        </div>
-        <div class="portfolio-item" style="background: linear-gradient(135deg, #FFECC0, #FFD580);">
-          <div class="portfolio-placeholder">
-            <div class="icon">🎙️</div>
-            <div class="label">인터뷰 영상</div>
-          </div>
-          <div class="portfolio-overlay">
-            <h4>CEO 인터뷰 시리즈</h4>
-            <p>2024 · 인터뷰</p>
-          </div>
-        </div>
-        <div class="portfolio-item" style="background: linear-gradient(135deg, #FFE5B0, #FFC966);">
-          <div class="portfolio-placeholder">
-            <div class="icon">🌟</div>
-            <div class="label">모션 그래픽</div>
-          </div>
-          <div class="portfolio-overlay">
-            <h4>인트로 모션</h4>
-            <p>2024 · 그래픽</p>
-          </div>
-        </div>
-        <div class="portfolio-item" style="background: linear-gradient(135deg, #FFD0A0, #FFA840);">
-          <div class="portfolio-placeholder">
-            <div class="icon">📱</div>
-            <div class="label">SNS 영상</div>
-          </div>
-          <div class="portfolio-overlay">
-            <h4>릴스 캠페인</h4>
-            <p>2024 · SNS</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="portfolio-cta fade-in">
-        <a href="#contact" class="btn btn-outline">작업 의뢰하기 →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======= VISION ======= -->
-  <section id="vision">
-    <div class="container">
-      <div class="vision-inner">
-        <div class="vision-text fade-in">
-          <span class="tag">Vision</span>
-          <h2 style="margin-top:14px">크리에이터들의<br><span class="highlight">든든한 파트너</span>로</h2>
-          <p>꾸더덕은 단순한 제작사를 넘어, 크리에이터와 함께 성장하는 미디어 플랫폼으로 나아갑니다.</p>
-          <p>장기적으로는 MCN(Multi-Channel Network) 형태로 발전해 다양한 크리에이터들의 채널 운영·수익화·브랜딩을 지원하는 종합 미디어 기획사를 목표로 합니다.</p>
-          <div class="vision-pillars">
-            <div class="pillar">
-              <div class="pillar-icon">🦆</div>
-              <div class="pillar-text">
-                <h4>자체 채널 운영</h4>
-                <p>꾸더덕만의 유튜브 채널로 직접 콘텐츠를 만들고, 그 노하우를 파트너에게 공유합니다.</p>
-              </div>
-            </div>
-            <div class="pillar">
-              <div class="pillar-icon">🤝</div>
-              <div class="pillar-text">
-                <h4>크리에이터 네트워크</h4>
-                <p>함께하는 크리에이터들이 서로 성장하는 MCN 생태계를 만들어갑니다.</p>
-              </div>
-            </div>
-            <div class="pillar">
-              <div class="pillar-icon">🚀</div>
-              <div class="pillar-text">
-                <h4>기술 + 창의력</h4>
-                <p>데이터 기반의 전략과 창의적인 스토리텔링으로 지속 성장하는 콘텐츠를 만듭니다.</p>
-              </div>
+            <div class="stat-box">
+              <div class="stat-num">2024</div>
+              <div class="stat-label">설립 연도</div>
             </div>
           </div>
         </div>
-
-        <div class="vision-art fade-in">
-          <div class="mcn-card">
-            <div class="duck-icon">🦆</div>
-            <h3>MCN Vision</h3>
-            <div class="sub">함께 날아오를 크리에이터들</div>
-            <div class="mcn-creators">
-              <div class="creator-avatar">🎬</div>
-              <div class="creator-avatar">🎵</div>
-              <div class="creator-avatar">🎮</div>
-              <div class="creator-avatar">✏️</div>
-              <div class="creator-avatar" style="background:rgba(255,138,0,.15); font-size:0.9rem; font-weight:800; color:var(--orange);">+</div>
-            </div>
-            <p class="mcn-tagline">크리에이터 <strong>모집 중</strong><br>함께 성장해요, 꾸더덕과 함께 🐥</p>
+        <div class="about-image reveal reveal-d2">
+          <div class="ph" style="width:100%;height:100%;">
+            <span class="ph-label">Brand Image</span>
+            <span class="ph-size">800 × 1000</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ======= CONTACT ======= -->
-  <section id="contact">
+  <!-- CREATORS -->
+  <section class="section" id="creators">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <p class="section-eyebrow">Our Channels &amp; Partners</p>
+          <h2 class="section-h2">GoodAllDuck<br>Creators</h2>
+        </div>
+        <a href="#contact" class="text-link">
+          크리에이터 협업 문의 <span class="arr">→</span>
+        </a>
+      </div>
+      <div class="creators-featured reveal">
+        <div class="creator-featured-main">
+          <div class="ph" style="width:100%;height:100%;">
+            <span class="ph-label">Featured Channel</span>
+            <span class="ph-size">1280 × 720</span>
+          </div>
+          <div class="creator-card-caption">
+            <div class="creator-card-name">꾸더덕 공식 채널</div>
+            <div class="creator-card-sub">GoodAllDuck Official · YouTube</div>
+          </div>
+        </div>
+        <div class="creator-side-stack">
+          <div class="creator-side-card">
+            <div class="ph" style="width:100%;height:100%;min-height:160px;">
+              <span class="ph-label">Creator Channel</span>
+            </div>
+            <div class="creator-card-caption">
+              <div class="creator-card-name">크리에이터 채널명</div>
+              <div class="creator-card-sub">분야 · 구독자 수</div>
+            </div>
+          </div>
+          <div class="creator-side-card">
+            <div class="ph" style="width:100%;height:100%;min-height:160px;">
+              <span class="ph-label">Creator Channel</span>
+            </div>
+            <div class="creator-card-caption">
+              <div class="creator-card-name">크리에이터 채널명</div>
+              <div class="creator-card-sub">분야 · 구독자 수</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="creators-grid reveal">
+        <div class="creator-thumb">
+          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Creator</span></div>
+          <div class="creator-thumb-overlay"><span class="creator-thumb-label">크리에이터명</span></div>
+        </div>
+        <div class="creator-thumb">
+          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Creator</span></div>
+          <div class="creator-thumb-overlay"><span class="creator-thumb-label">크리에이터명</span></div>
+        </div>
+        <div class="creator-thumb">
+          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Creator</span></div>
+          <div class="creator-thumb-overlay"><span class="creator-thumb-label">크리에이터명</span></div>
+        </div>
+        <div class="creator-add">
+          <div class="creator-add-icon">+</div>
+          <div class="creator-add-label">협업 크리에이터</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="section" id="portfolio">
+    <div class="container">
+      <div class="portfolio-header reveal">
+        <div>
+          <p class="section-eyebrow">Video Production</p>
+          <h2 class="section-h2">영상 제작<br>포트폴리오</h2>
+          <p class="portfolio-intro">
+            브랜드 홍보 영상부터 유튜브 콘텐츠, 숏폼, 모션 그래픽까지.<br>
+            목적에 맞는 영상으로 이야기를 완성합니다.
+          </p>
+        </div>
+        <a href="#contact" class="text-link" style="align-self:flex-start;margin-top:8px;">
+          제작 문의하기 <span class="arr">→</span>
+        </a>
+      </div>
+      <div class="portfolio-grid reveal">
+        <div class="p-item">
+          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Video / Image</span><span class="ph-size">1920 × 1080</span></div>
+          <div class="p-overlay"><div class="p-cat">브랜드 영상</div><div class="p-title">브랜드 스토리 캠페인</div></div>
+        </div>
+        <div class="p-item">
+          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Video / Image</span></div>
+          <div class="p-overlay"><div class="p-cat">유튜브 콘텐츠</div><div class="p-title">채널 오프닝 시리즈</div></div>
+        </div>
+        <div class="p-item">
+          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Video / Image</span></div>
+          <div class="p-overlay"><div class="p-cat">숏폼</div><div class="p-title">쇼츠 캠페인</div></div>
+        </div>
+        <div class="p-item">
+          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Video / Image</span></div>
+          <div class="p-overlay"><div class="p-cat">인터뷰</div><div class="p-title">CEO 인터뷰 시리즈</div></div>
+        </div>
+        <div class="p-item">
+          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Video / Image</span></div>
+          <div class="p-overlay"><div class="p-cat">모션 그래픽</div><div class="p-title">브랜드 인트로 패키지</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
     <div class="container">
       <div class="contact-inner">
-        <div class="contact-info fade-in">
-          <span class="tag">Contact</span>
-          <h2 style="margin-top:14px">함께 만들어<br>볼까요?</h2>
-          <p>채널 운영, 영상 제작, 아니면 그냥 궁금한 것도 괜찮아요. 편하게 연락주세요. 꾸더덕이 성실히 답장 드릴게요 🦆</p>
-          <div class="contact-items">
-            <div class="contact-item">
-              <div class="contact-item-icon">📧</div>
-              <div class="contact-item-text">
-                <div class="label">이메일</div>
-                <div class="value">hello@goodallduck.com</div>
-              </div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-item-icon">🌐</div>
-              <div class="contact-item-text">
-                <div class="label">웹사이트</div>
-                <div class="value">goodallduck.com</div>
-              </div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-item-icon">📺</div>
-              <div class="contact-item-text">
-                <div class="label">유튜브</div>
-                <div class="value">youtube.com/@goodallduck</div>
-              </div>
-            </div>
-          </div>
+        <div class="reveal">
+          <p class="section-eyebrow">Get In Touch</p>
+          <h2 class="section-h2">함께<br>만들어요</h2>
+          <p class="contact-desc">
+            채널 운영, 영상 제작, 크리에이터 협업 등<br>
+            어떤 내용이든 편하게 연락주세요.
+          </p>
         </div>
-
-        <div class="contact-form fade-in">
-          <h3 style="font-size:1.2rem; font-weight:800; margin-bottom:24px;">문의 보내기</h3>
-          <form onsubmit="handleSubmit(event)">
-            <div class="form-row">
-              <div class="form-group">
-                <label>이름 / 담당자</label>
-                <input type="text" placeholder="홍길동" required>
-              </div>
-              <div class="form-group">
-                <label>연락처</label>
-                <input type="text" placeholder="010-0000-0000">
-              </div>
-            </div>
-            <div class="form-group">
-              <label>이메일</label>
-              <input type="email" placeholder="email@example.com" required>
-            </div>
-            <div class="form-group">
-              <label>문의 유형</label>
-              <select>
-                <option value="">선택해주세요</option>
-                <option>유튜브 채널 운영 의뢰</option>
-                <option>영상 제작 외주</option>
-                <option>크리에이터 협업 / MCN 등록</option>
-                <option>기타 문의</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>문의 내용</label>
-              <textarea placeholder="어떤 것을 도와드릴까요? 편하게 적어주세요 :)"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary form-submit">문의 보내기 🦆</button>
-          </form>
+        <div class="contact-info-list reveal reveal-d1">
+          <div class="contact-info-row">
+            <span class="ci-label">Email</span>
+            <span class="ci-value"><a href="mailto:goodallduck@gmail.com">goodallduck@gmail.com</a></span>
+          </div>
+          <div class="contact-info-row">
+            <span class="ci-label">Website</span>
+            <span class="ci-value"><a href="https://goodallduck.com" target="_blank">goodallduck.com</a></span>
+          </div>
+          <div class="contact-info-row">
+            <span class="ci-label">YouTube</span>
+            <span class="ci-value"><a href="https://www.youtube.com/channel/UC6eXBC1wz2XyBf4iTkvv3Kg" target="_blank">@goodallduck</a></span>
+          </div>
+          <div class="contact-info-row">
+            <span class="ci-label">Instagram</span>
+            <span class="ci-value"><a href="https://www.instagram.com/goodallduck/" target="_blank">@goodallduck</a></span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ======= FOOTER ======= -->
+  <!-- FOOTER -->
   <footer>
     <div class="container">
       <div class="footer-inner">
-        <div class="footer-brand">
-          <div class="logo-text">
-            <span>꾸더덕</span>
-            <span class="en">GoodAllDuck</span>
-          </div>
-          <p>유쾌하고 전문적인 크리에이티브 에이전시.<br>콘텐츠에 날개를 달아드립니다.</p>
-          <div class="social">
-            <a href="#" class="social-btn" title="YouTube">▶</a>
-            <a href="#" class="social-btn" title="Instagram">📷</a>
-            <a href="#" class="social-btn" title="Twitter">🐦</a>
-          </div>
+        <div class="footer-logo">꾸더덕 · GoodAllDuck</div>
+        <div class="footer-links">
+          <a href="#about">꾸더덕</a>
+          <a href="#creators">Creators</a>
+          <a href="#portfolio">Portfolio</a>
+          <a href="#contact">Contact</a>
         </div>
-        <div class="footer-col">
-          <h5>서비스</h5>
-          <ul>
-            <li><a href="#services">유튜브 채널 운영</a></li>
-            <li><a href="#services">영상 제작 외주</a></li>
-            <li><a href="#services">이벤트 기획</a></li>
-            <li><a href="#services">온라인 마케팅</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h5>회사</h5>
-          <ul>
-            <li><a href="#vision">비전 &amp; MCN</a></li>
-            <li><a href="#process">작업 프로세스</a></li>
-            <li><a href="#portfolio">작업물</a></li>
-            <li><a href="#contact">연락하기</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h5>Contact</h5>
-          <ul>
-            <li><a href="mailto:hello@goodallduck.com">hello@goodallduck.com</a></li>
-            <li><a href="#">goodallduck.com</a></li>
-            <li><a href="#">YouTube</a></li>
-            <li><a href="#">Instagram</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© 2024 꾸더덕 · GoodAllDuck. All rights reserved.</span>
-        <span class="domain">goodallduck.com</span>
+        <div class="footer-copy">© 2024 GoodAllDuck. All rights reserved.</div>
       </div>
     </div>
   </footer>
 
 
   <script>
-    /* =============================================
-       ⚙️ 서비스 활성화 설정
-       ─────────────────────────────────────────────
-       false → 해당 카드가 완전히 숨겨집니다
-       true  → Coming Soon 배지와 함께 표시됩니다
-       ============================================= */
-    const SERVICES_VISIBLE = {
-      events:    true,   // 온/오프라인 이벤트 기획
-      marketing: true,   // 온라인 마케팅 컨설팅
-    };
+    /* ---- Nav scroll ---- */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('load', onScroll);
 
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('[data-service]').forEach(card => {
-        const key = card.dataset.service;
-        if (!SERVICES_VISIBLE[key]) {
-          card.style.display = 'none';
-        }
-      });
-    });
-
-    /* Navbar scroll effect */
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 40);
-    });
-
-    /* Mobile nav toggle */
-    function toggleMobile() {
-      document.getElementById('mobileNav').classList.toggle('open');
+    function onScroll() {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+      updateActiveLink();
     }
 
-    /* Fade-in on scroll */
-    const observer = new IntersectionObserver(
-      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-      { threshold: 0.12 }
-    );
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    /* ---- Active nav link ----
+       각 섹션의 상단이 뷰포트 기준으로 120px 이내에 들어오면 활성화.
+       페이지 맨 아래(contact)는 스크롤 바닥 감지로 강제 활성화.        */
+    const sectionIds = ['about', 'creators', 'portfolio', 'contact'];
+    const navLinks   = document.querySelectorAll('.nav-links a, .mobile-menu a');
 
-    /* Active nav link highlight */
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-    window.addEventListener('scroll', () => {
+    function updateActiveLink() {
+      const scrollBottom = window.scrollY + window.innerHeight;
+      const docHeight    = document.documentElement.scrollHeight;
+      const nearBottom   = scrollBottom >= docHeight - 80;
+
       let current = '';
-      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
-      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
-    });
 
-    /* Contact form */
+      if (nearBottom) {
+        current = 'contact';
+      } else {
+        sectionIds.forEach(id => {
+          const el = document.getElementById(id);
+          if (el && window.scrollY >= el.offsetTop - 120) current = id;
+        });
+      }
+
+      navLinks.forEach(a => {
+        const href = a.getAttribute('href').replace('#', '');
+        a.classList.toggle('active', href === current);
+      });
+    }
+
+    /* ---- Mobile menu ---- */
+    function toggleMenu(btn) {
+      const menu = document.getElementById('mobileMenu');
+      const open = menu.classList.toggle('open');
+      btn.classList.toggle('open', open);
+    }
+    function closeMenu() {
+      document.getElementById('mobileMenu').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
+    }
+
+    /* ---- Scroll reveal ---- */
+    const revealObs = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }),
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    /* ---- Form ---- */
     function handleSubmit(e) {
       e.preventDefault();
-      const btn = e.target.querySelector('.form-submit');
-      btn.textContent = '전송 완료! 곧 연락드릴게요 🦆';
-      btn.style.background = '#22a745';
+      const btn = document.getElementById('submitBtn');
+      btn.textContent = 'Sent ✓';
+      btn.style.background = 'var(--white)';
+      btn.style.color = 'var(--bg)';
       btn.disabled = true;
       setTimeout(() => {
-        btn.textContent = '문의 보내기 🦆';
+        btn.textContent = 'Send Message →';
         btn.style.background = '';
+        btn.style.color = '';
         btn.disabled = false;
         e.target.reset();
       }, 4000);
