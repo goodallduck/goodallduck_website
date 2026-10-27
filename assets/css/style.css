@@ -129,7 +129,9 @@ body.is-locked { overflow: hidden; }
   font-family: var(--display); font-size: 13px; letter-spacing: .06em;
   transform: rotate(-3deg);
 }
-.hero__title { font-size: clamp(46px, 7.2vw, 96px); font-weight: 900; line-height: 1.06; letter-spacing: -0.055em; margin-bottom: 30px; }
+/* logo-style wordmark: GOOD / ALL / DUCK with ALL in orange */
+.hero__title { font-family: var(--display); font-weight: 400; font-size: clamp(64px, 9.6vw, 136px); line-height: .92; letter-spacing: .01em; margin-bottom: 40px; }
+.hero__title em { font-style: normal; color: var(--orange); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; letter-spacing: .12em; }
 .proof { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
 .proof li {
   padding: 8px 14px; border-radius: 999px; background: #F3F1EE;
@@ -246,7 +248,7 @@ body.is-locked { overflow: hidden; }
 .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .quote {
   position: relative;
-  display: flex; flex-direction: column; justify-content: space-between; gap: 28px;
+  display: flex; flex-direction: column; justify-content: center; gap: 28px;
   padding: 34px 28px 26px; background: #fff;
   border: 2px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow);
 }
