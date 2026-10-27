@@ -18,22 +18,12 @@
   menuBtn.addEventListener("click", () => setMenu(!document.body.classList.contains("menu-open")));
   $$("a", menu).forEach((a) => a.addEventListener("click", () => setMenu(false)));
 
-  /* ---------- work cards (from works.js) ---------- */
+  /* ---------- work cards: pre-rendered by tools/build.js; render here only if missing ---------- */
   $$("[data-works]").forEach((grid) => {
+    if (grid.querySelector(".card")) return;
     const limit = Number(grid.dataset.limit) || Infinity;
-    grid.innerHTML = (window.WORKS || []).slice(0, limit).map((w, i) => `
-      <article class="card reveal${grid.hasAttribute("data-feature") && i === 0 ? " card--feature" : ""}" data-cat="${w.cat}" data-i="${i}">
-        <button class="card__media" aria-label="${esc(w.title)} 영상 재생">
-          <img src="assets/img/works/${w.slug}.webp" alt="${esc(w.series)} — ${esc(w.title)}" loading="lazy" width="1280" height="720">
-          <img class="card__alt" src="assets/img/works/${w.slug}-alt.webp" alt="" loading="lazy" width="960" height="540">
-          <span class="card__play">재생</span>
-        </button>
-        <div class="card__body">
-          <span class="tag">${esc(w.catLabel)}</span>
-          <h3 class="card__title"><span class="card__series">${esc(w.series)}</span> ${esc(w.title)}</h3>
-          <p class="meta">${esc(w.role)} · ${esc(w.runtime)} · ${esc(w.date)}</p>
-        </div>
-      </article>`).join("");
+    grid.innerHTML = (window.WORKS || []).slice(0, limit)
+      .map((w, i) => window.workCardHTML(w, i, grid.hasAttribute("data-feature") && i === 0)).join("");
   });
 
   /* ---------- ABOUT collage ----------
@@ -93,8 +83,10 @@
       lastFocus?.focus();
     };
     document.addEventListener("click", (e) => {
-      const btn = e.target.closest(".card__media, [data-play]");
-      if (btn) open(window.WORKS[btn.dataset.play ?? btn.closest(".card").dataset.i]);
+      const btn = e.target.closest(".card__media, .card__link, [data-play]");
+      if (!btn) return;
+      e.preventDefault();
+      open(window.WORKS[btn.dataset.play ?? btn.closest(".card").dataset.i]);
     });
     $$("[data-close]", modal).forEach((el) => el.addEventListener("click", close));
     document.addEventListener("keydown", (e) => {

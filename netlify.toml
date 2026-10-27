@@ -2,3 +2,23 @@
 # 이 폴더(저장소 루트)를 그대로 배포합니다.
 [build]
   publish = "."
+
+# netlify.app 주소로 들어오면 대표 도메인으로 보내서 검색엔진에 주소가 하나만 잡히게 합니다
+# (deploy-preview-N--goodallduck.netlify.app 미리보기 주소는 영향 없음)
+[[redirects]]
+  from = "https://goodallduck.netlify.app/*"
+  to = "https://goodallduck.com/:splat"
+  status = 301
+  force = true
+
+# 개발용 파일은 공개하지 않습니다
+[[redirects]]
+  from = "/tools/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
