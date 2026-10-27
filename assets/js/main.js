@@ -36,6 +36,28 @@
       </article>`).join("");
   });
 
+  /* ---------- ABOUT collage ----------
+     Order matters: logo (2x2) + 3 wide (2x2) + 8 small tiles pack a 4-column grid
+     with no gaps (6 rows), and a 2-column grid on mobile (9 rows). */
+  const COLLAGE = [
+    ["second-entry-1", "", true], ["field-ep3", ""], ["sura-y2k", ""],
+    ["field-ep4", "", true], ["second-entry-2", ""], ["sura-guam", "-alt"],
+    ["sura-guam", "", true], ["second-entry-1", "-alt"], ["field-ep4", "-alt"], ["field-ep3", "-alt"], ["sura-y2k", "-alt"],
+  ];
+  $$("[data-collage]").forEach((box) => {
+    const works = window.WORKS || [];
+    box.insertAdjacentHTML("beforeend", COLLAGE.map(([slug, alt, wide]) => {
+      const i = works.findIndex((w) => w.slug === slug);
+      if (i < 0) return "";
+      const w = works[i];
+      return `
+      <button class="tile reveal${wide ? " tile--wide" : ""}" data-play="${i}" aria-label="${esc(w.title)} 영상 재생">
+        <img src="assets/img/works/${slug}${alt}.webp" alt="" loading="lazy">
+        ${alt ? "" : `<span class="tag">${esc(w.catLabel)}</span>`}
+      </button>`;
+    }).join(""));
+  });
+
   /* ---------- filters (WORK page) ---------- */
   $$(".filter").forEach((btn) => btn.addEventListener("click", () => {
     $$(".filter").forEach((b) => { b.classList.toggle("is-active", b === btn); b.setAttribute("aria-selected", b === btn); });
@@ -71,8 +93,8 @@
       lastFocus?.focus();
     };
     document.addEventListener("click", (e) => {
-      const btn = e.target.closest(".card__media");
-      if (btn) open(window.WORKS[btn.closest(".card").dataset.i]);
+      const btn = e.target.closest(".card__media, [data-play]");
+      if (btn) open(window.WORKS[btn.dataset.play ?? btn.closest(".card").dataset.i]);
     });
     $$("[data-close]", modal).forEach((el) => el.addEventListener("click", close));
     document.addEventListener("keydown", (e) => {
