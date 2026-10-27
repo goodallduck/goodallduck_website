@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="assets/css/style.css?v=10">
+  <link rel="stylesheet" href="assets/css/style.css?v=12">
 </head>
 <body data-page="contact">
 
@@ -46,9 +46,11 @@
           <p class="contact__lead">편하게 남겨주세요.<br>확인 후 회신드릴게요.</p>
           <a class="contact__mail" href="mailto:goodallduck@gmail.com">goodallduck@gmail.com</a>
         </div>
-        <form class="form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="contact">
-          <p class="hp"><label>비워두세요 <input name="bot-field"></label></p>
+        <form class="form" name="contact" method="POST" action="https://api.web3forms.com/submit">
+          <input type="hidden" name="access_key" value="c624ac1c-64b8-4b9a-a00a-7a2caf29c4b7">
+          <input type="hidden" name="subject" value="[꾸더덕] 새 문의가 도착했어요">
+          <input type="hidden" name="from_name" value="꾸더덕 홈페이지">
+          <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
           <fieldset class="chips">
             <legend>문의 유형</legend>
             <label><input type="radio" name="type" value="영상 촬영 · 편집" checked><span>영상 촬영 · 편집</span></label>
@@ -103,7 +105,7 @@
     </div>
   </div>
 
-  <script src="assets/js/works.js?v=10"></script>
-  <script src="assets/js/main.js?v=10" defer></script>
+  <script src="assets/js/works.js?v=12"></script>
+  <script src="assets/js/main.js?v=12" defer></script>
 </body>
 </html>

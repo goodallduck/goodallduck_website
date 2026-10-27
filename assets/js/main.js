@@ -40,9 +40,9 @@
      Order matters: logo (2x2) + 3 wide (2x2) + 8 small tiles pack a 4-column grid
      with no gaps (6 rows), and a 2-column grid on mobile (9 rows). */
   const COLLAGE = [
-    ["second-entry-1", "", true], ["field-ep3", ""], ["sura-y2k", ""],
-    ["field-ep4", "", true], ["second-entry-2", ""], ["sura-guam", "-alt"],
-    ["sura-guam", "", true], ["second-entry-1", "-alt"], ["field-ep4", "-alt"], ["field-ep3", "-alt"], ["sura-y2k", "-alt"],
+    ["hancar-daejeon", "", true], ["field-ep3", ""], ["sura-y2k", ""],
+    ["second-entry-1", "", true], ["hancar-history", ""], ["hancar-tint", ""],
+    ["sura-guam", "", true], ["field-ep4", ""], ["hancar-replace", ""], ["second-entry-2", ""], ["hancar-chip", ""],
   ];
   $$("[data-collage]").forEach((box) => {
     const works = window.WORKS || [];
@@ -113,8 +113,7 @@
   }, { rootMargin: "0px 0px -6% 0px", threshold: 0.06 });
   $$(".reveal").forEach((el, i) => { el.style.transitionDelay = `${(i % 2) * 90}ms`; io.observe(el); });
 
-  /* ---------- contact form (Netlify Forms) ---------- */
-  // select by name: Netlify strips data-netlify from the deployed HTML once it detects the form
+  /* ---------- contact form (Web3Forms → email to goodallduck@gmail.com) ---------- */
   $$('form[name="contact"]').forEach((form) => {
     const status = $(".form__status", form);
     form.addEventListener("submit", async (e) => {
@@ -125,12 +124,13 @@
       status.className = "form__status";
       status.textContent = "보내는 중…";
       try {
-        const res = await fetch("/", {
+        const res = await fetch(form.action, {
           method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: new URLSearchParams(new FormData(form)).toString(),
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(Object.fromEntries(new FormData(form))),
         });
-        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+        if (!res.ok || !data.success) throw new Error(data.message || res.status);
         form.reset();
         status.classList.add("is-ok");
         status.textContent = "접수됐어요! 확인 후 연락드릴게요.";
