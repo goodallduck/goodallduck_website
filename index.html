@@ -3,930 +3,158 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>꾸더덕 — GoodAllDuck</title>
-  <meta name="description" content="뉴미디어 콘텐츠 제작과 크리에이터 매니지먼트 기반의 크리에이티브 에이전시">
+  <title>꾸더덕 GoodAllDuck — 영상 편집 스튜디오</title>
+  <meta name="description" content="꾸더덕 GoodAllDuck — 토크 예능 · 인터뷰 · VLOG 영상 편집.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="꾸더덕 GoodAllDuck">
+  <meta property="og:description" content="토크 예능 · 인터뷰 · VLOG 영상 편집.">
+  <meta property="og:image" content="https://goodallduck.com/assets/img/og.jpg">
+  <meta property="og:url" content="https://goodallduck.com/">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="icon" href="assets/img/logo/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/logo/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    /* ==============================================
-       TOKENS
-    =============================================== */
-    :root {
-      --bg:      #0B0B0B;
-      --bg2:     #111111;
-      --bg3:     #1A1A1A;
-      --white:   #FFFFFF;
-      --gray1:   #BBBBBB;
-      --gray2:   #666666;
-      --gray3:   #2A2A2A;
-      --accent:  #FF8A00;
-      --border:  rgba(255,255,255,0.08);
-    }
-
-    /* ==============================================
-       RESET
-    =============================================== */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background: var(--bg);
-      color: var(--white);
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
-    a { text-decoration: none; color: inherit; }
-    ul { list-style: none; }
-    button { font-family: inherit; }
-
-    /* ==============================================
-       CONTAINER  — 콘텐츠 영역 최대 너비 + 좌우 여백
-    =============================================== */
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 80px;
-    }
-
-    /* ==============================================
-       PLACEHOLDER
-    =============================================== */
-    .ph {
-      background: var(--bg3);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      position: relative;
-      overflow: hidden;
-    }
-    /* 십자선 */
-    .ph::before, .ph::after {
-      content: '';
-      position: absolute;
-      background: var(--gray3);
-      pointer-events: none;
-    }
-    .ph::before { width: 1px; height: 36%; top: 32%; left: 50%; }
-    .ph::after  { width: 36%; height: 1px; top: 50%; left: 32%; }
-    .ph-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #444;
-      position: relative; z-index: 1;
-    }
-    .ph-size {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.55rem;
-      color: #333;
-      position: relative; z-index: 1;
-    }
-
-    /* ==============================================
-       NAVIGATION
-    =============================================== */
-    #nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      transition: background .35s, border-color .35s;
-      border-bottom: 1px solid transparent;
-    }
-    #nav.scrolled {
-      background: rgba(11, 11, 11, .94);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom-color: var(--border);
-    }
-    .nav-inner {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 80px;
-      height: 62px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      font-weight: 900;
-      font-size: 1.35rem;
-      letter-spacing: -0.03em;
-      color: var(--white);
-      flex-shrink: 0;
-    }
-    /* Links — right side */
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 40px;
-    }
-    .nav-links a {
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: rgba(255,255,255,.45);
-      letter-spacing: 0.03em;
-      transition: color .2s;
-      position: relative;
-      padding-bottom: 2px;
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px; left: 0; right: 100%;
-      height: 1px;
-      background: var(--accent);
-      transition: right .25s ease;
-    }
-    .nav-links a:hover { color: var(--white); }
-    .nav-links a:hover::after { right: 0; }
-    .nav-links a.active { color: var(--white); }
-    .nav-links a.active::after { right: 0; }
-
-    /* Hamburger (mobile only) */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 4px;
-    }
-    .hamburger span {
-      display: block;
-      width: 22px; height: 1.5px;
-      background: var(--white);
-      transition: .3s;
-    }
-    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-    /* Mobile menu */
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 62px; left: 0; right: 0;
-      z-index: 999;
-      background: rgba(11,11,11,.97);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      flex-direction: column;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      padding: 16px 32px;
-      font-size: .95rem;
-      font-weight: 600;
-      color: rgba(255,255,255,.7);
-      border-bottom: 1px solid var(--border);
-      transition: color .2s;
-    }
-    .mobile-menu a:last-child { border-bottom: none; }
-    .mobile-menu a:hover { color: var(--white); }
-    .mobile-menu a.active { color: var(--white); }
-
-    /* ==============================================
-       HERO — 풀스크린 (좌우 여백 없음)
-    =============================================== */
-    #hero {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      min-height: 600px;
-      overflow: hidden;
-    }
-    /* 미디어 영역: 화면 꽉 채움 */
-    .hero-media {
-      position: absolute;
-      inset: 0;
-    }
-    .hero-media .ph { width: 100%; height: 100%; background: var(--bg2); }
-    .hero-media .ph::before, .hero-media .ph::after { display: none; }
-    .hero-grid {
-      position: absolute; inset: 0; pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
-      background-size: 80px 80px;
-    }
-    .hero-media-label {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      pointer-events: none;
-    }
-    .hero-gradient {
-      position: absolute; inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(11,11,11,.12) 0%,
-        rgba(11,11,11,.0)  40%,
-        rgba(11,11,11,.6)  78%,
-        rgba(11,11,11,.9)  100%
-      );
-    }
-    /* 텍스트 영역: 컨테이너 기준 좌우 여백 */
-    .hero-content {
-      position: absolute;
-      bottom: 80px;
-      left: 0; right: 0;
-    }
-    .hero-content .container { /* 이미 container로 감싸므로 여백 자동 적용 */ }
-    .hero-eyebrow {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.45);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 28px; height: 1px;
-      background: rgba(255,255,255,.3);
-    }
-    .hero-h1 {
-      font-size: clamp(3.2rem, 7vw, 8rem);
-      font-weight: 900;
-      line-height: 1.06;
-      letter-spacing: -0.025em;
-    }
-    .hero-h1 .accent { color: var(--accent); }
-    .hero-sub {
-      margin-top: 24px;
-      font-size: clamp(0.9rem, 1.3vw, 1.05rem);
-      font-weight: 300;
-      color: rgba(255,255,255,.65);
-      line-height: 1.85;
-      max-width: 480px;
-    }
-    .hero-scroll {
-      position: absolute;
-      bottom: 36px; right: 80px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.3);
-    }
-    .scroll-bar { width: 36px; height: 1px; background: rgba(255,255,255,.2); }
-
-    /* ==============================================
-       SECTION — 공통 구조 (container 안에서 여백)
-    =============================================== */
-    .section { padding: 120px 0; }
-    .section-eyebrow {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gray1);
-      margin-bottom: 18px;
-    }
-    .section-h2 {
-      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
-      font-weight: 900;
-      line-height: 1.1;
-      letter-spacing: -0.025em;
-    }
-    .section-h2 .accent { color: var(--accent); }
-    .text-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.4);
-      transition: color .2s;
-    }
-    .text-link .arr { transition: transform .2s; }
-    .text-link:hover { color: var(--white); }
-    .text-link:hover .arr { transform: translateX(4px); }
-
-    /* ==============================================
-       ABOUT
-    =============================================== */
-    #about { background: var(--bg2); }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-    .about-body {
-      margin-top: 28px;
-      font-size: 1rem;
-      font-weight: 300;
-      line-height: 2;
-      color: rgba(255,255,255,.68);
-    }
-    .about-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      margin-top: 52px;
-      border-top: 1px solid var(--border);
-      border-left: 1px solid var(--border);
-    }
-    .stat-box {
-      padding: 28px 24px;
-      border-bottom: 1px solid var(--border);
-      border-right: 1px solid var(--border);
-    }
-    .stat-num {
-      font-family: 'Inter', sans-serif;
-      font-size: 2.4rem;
-      font-weight: 800;
-      line-height: 1;
-      color: var(--white);
-    }
-    .stat-num sup { font-size: 1rem; color: var(--accent); margin-left: 2px; }
-    .stat-label {
-      font-size: 0.78rem;
-      font-weight: 400;
-      color: var(--gray1);
-      margin-top: 10px;
-      line-height: 1.4;
-    }
-    .about-image { aspect-ratio: 3/4; }
-    .about-image .ph { width: 100%; height: 100%; }
-
-    /* ==============================================
-       CREATORS
-    =============================================== */
-    #creators { background: var(--bg); }
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 52px;
-    }
-    .creators-featured {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 14px;
-      margin-bottom: 14px;
-    }
-    .creator-featured-main {
-      aspect-ratio: 16/9;
-      position: relative;
-      overflow: hidden;
-    }
-    .creator-featured-main .ph { width: 100%; height: 100%; }
-    .creator-side-stack { display: grid; grid-template-rows: 1fr 1fr; gap: 14px; }
-    .creator-side-card { position: relative; overflow: hidden; }
-    .creator-side-card .ph { width: 100%; height: 100%; min-height: 150px; }
-    .creator-card-caption {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 16px 18px;
-      background: linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 100%);
-    }
-    .creator-card-name { font-size: .88rem; font-weight: 700; }
-    .creator-card-sub {
-      font-size: .72rem;
-      color: rgba(255,255,255,.5);
-      margin-top: 3px;
-      font-family: 'Inter', sans-serif;
-    }
-    .creators-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-    }
-    .creator-thumb {
-      aspect-ratio: 1;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
-    .creator-thumb .ph { width: 100%; height: 100%; }
-    .creator-thumb-overlay {
-      position: absolute; inset: 0;
-      background: rgba(11,11,11,0);
-      transition: background .3s;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .creator-thumb:hover .creator-thumb-overlay { background: rgba(11,11,11,.6); }
-    .creator-thumb-label {
-      font-size: .75rem;
-      font-weight: 700;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: all .25s;
-      letter-spacing: .02em;
-    }
-    .creator-thumb:hover .creator-thumb-label { opacity: 1; transform: translateY(0); }
-    .creator-add {
-      aspect-ratio: 1;
-      border: 1px dashed var(--gray3);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 10px; cursor: pointer;
-      transition: border-color .2s;
-    }
-    .creator-add:hover { border-color: var(--gray2); }
-    .creator-add-icon { font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 300; color: var(--gray2); line-height: 1; }
-    .creator-add-label { font-family: 'Inter', sans-serif; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray2); }
-
-    /* ==============================================
-       PORTFOLIO
-    =============================================== */
-    #portfolio { background: var(--bg2); }
-    .portfolio-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 52px;
-    }
-    .portfolio-intro {
-      max-width: 500px;
-      font-size: .95rem;
-      font-weight: 300;
-      color: rgba(255,255,255,.6);
-      line-height: 1.85;
-      margin-top: 18px;
-    }
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 12px;
-    }
-    .p-item {
-      position: relative; overflow: hidden; cursor: pointer;
-    }
-    .p-item .ph { width: 100%; height: 100%; min-height: 80px; }
-    .p-item:nth-child(1) { grid-column: span 7; aspect-ratio: 16/9; }
-    .p-item:nth-child(2) { grid-column: span 5; aspect-ratio: 4/3; }
-    .p-item:nth-child(3) { grid-column: span 4; aspect-ratio: 4/3; }
-    .p-item:nth-child(4) { grid-column: span 4; aspect-ratio: 4/3; }
-    .p-item:nth-child(5) { grid-column: span 4; aspect-ratio: 4/3; }
-    .p-overlay {
-      position: absolute; inset: 0;
-      background: rgba(11,11,11,0);
-      transition: background .3s;
-      display: flex; flex-direction: column; justify-content: flex-end; padding: 20px;
-    }
-    .p-item:hover .p-overlay { background: rgba(11,11,11,.72); }
-    .p-cat {
-      font-family: 'Inter', sans-serif; font-size: .65rem; font-weight: 600;
-      letter-spacing: .14em; text-transform: uppercase; color: var(--accent);
-      opacity: 0; transform: translateY(8px); transition: all .25s .05s;
-    }
-    .p-title {
-      font-size: .9rem; font-weight: 700; margin-top: 4px;
-      opacity: 0; transform: translateY(8px); transition: all .25s;
-    }
-    .p-item:hover .p-cat,
-    .p-item:hover .p-title { opacity: 1; transform: translateY(0); }
-
-    /* ==============================================
-       CONTACT
-    =============================================== */
-    #contact { background: var(--bg); }
-    .contact-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 100px;
-      align-items: start;
-    }
-    .contact-desc {
-      margin-top: 24px;
-      font-size: .95rem;
-      font-weight: 300;
-      line-height: 1.95;
-      color: rgba(255,255,255,.62);
-    }
-    .contact-info-list {
-      margin-top: 48px;
-      border-top: 1px solid var(--border);
-    }
-    .contact-info-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 18px 0; border-bottom: 1px solid var(--border);
-    }
-    .ci-label {
-      font-family: 'Inter', sans-serif; font-size: .65rem; font-weight: 600;
-      letter-spacing: .15em; text-transform: uppercase; color: var(--gray1);
-    }
-    .ci-value {
-      font-size: .9rem; font-weight: 500;
-      color: var(--white);
-    }
-    .ci-value a {
-      color: var(--white);
-      transition: color .2s;
-    }
-    .ci-value a:hover { color: var(--accent); }
-
-    /* ==============================================
-       FOOTER
-    =============================================== */
-    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 40px 0; }
-    .footer-inner {
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
-    }
-    .footer-logo { font-size: 1.05rem; font-weight: 900; letter-spacing: -0.02em; }
-    .footer-links { display: flex; gap: 28px; }
-    .footer-links a {
-      font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 500;
-      letter-spacing: .05em; color: var(--gray2); transition: color .2s;
-    }
-    .footer-links a:hover { color: var(--white); }
-    .footer-copy { font-family: 'Inter', sans-serif; font-size: .68rem; color: var(--gray2); }
-
-    /* ==============================================
-       SCROLL REVEAL
-    =============================================== */
-    .reveal {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity .7s ease, transform .7s ease;
-    }
-    .reveal.on { opacity: 1; transform: translateY(0); }
-    .reveal-d1 { transition-delay: .1s; }
-    .reveal-d2 { transition-delay: .2s; }
-
-    /* ==============================================
-       RESPONSIVE
-    =============================================== */
-    @media (max-width: 1200px) {
-      .container { padding: 0 48px; }
-      .nav-inner { padding: 0 48px; }
-      .hero-scroll { right: 48px; }
-    }
-    @media (max-width: 900px) {
-      .container { padding: 0 24px; }
-      .nav-inner { padding: 0 24px; }
-      .hero-scroll { display: none; }
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-      .about-grid { grid-template-columns: 1fr; }
-      .about-image { display: none; }
-      .creators-featured { grid-template-columns: 1fr; }
-      .creator-side-stack { grid-template-rows: unset; grid-template-columns: 1fr 1fr; }
-      .creator-side-card .ph { min-height: 120px; }
-      .creators-grid { grid-template-columns: repeat(2, 1fr); }
-      .portfolio-grid { grid-template-columns: 1fr 1fr; }
-      .p-item { grid-column: span 1 !important; aspect-ratio: 16/9 !important; }
-      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
-      .section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
-      .portfolio-header { flex-direction: column; align-items: flex-start; gap: 16px; }
-    }
-    @media (max-width: 600px) {
-      .section { padding: 80px 0; }
-      .hero-content { bottom: 48px; }
-      .about-stats { grid-template-columns: 1fr 1fr; }
-      .creators-grid { grid-template-columns: 1fr 1fr; }
-      .footer-inner { flex-direction: column; align-items: flex-start; }
-      .footer-links { flex-wrap: wrap; gap: 16px; }
-      .mobile-menu a { padding: 14px 24px; }
-    }
-  </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="assets/css/style.css?v=8">
 </head>
-<body>
+<body data-page="home">
 
-  <!-- NAV -->
-  <nav id="nav">
-    <div class="nav-inner">
-      <a href="#home" class="nav-logo">꾸더덕</a>
-      <ul class="nav-links">
-        <li><a href="#about">꾸더덕</a></li>
-        <li><a href="#creators">Creators</a></li>
-        <li><a href="#portfolio">Portfolio</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <div class="hamburger" id="hamburger" onclick="toggleMenu(this)">
-        <span></span><span></span><span></span>
-      </div>
+  <header class="header">
+    <div class="header__inner">
+      <button class="menu-btn" id="menuBtn" aria-label="메뉴 열기" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+      <a href="./" class="brand" aria-label="꾸더덕 홈"><img src="assets/img/logo/logo.png" srcset="assets/img/logo/logo@2x.png 2x" alt="꾸더덕 GoodAllDuck" width="360" height="363"></a>
+      <a href="contact.html" class="pill pill--dark header__cta">문의하기</a>
     </div>
+  </header>
+
+  <nav class="menu" id="menu" aria-label="주요 메뉴" hidden>
+    <ul class="menu__list">
+      <li><a href="about.html"><span>ABOUT</span><small>소개</small></a></li>
+      <li><a href="work.html"><span>WORK</span><small>작업물</small></a></li>
+      <li><a href="contact.html"><span>CONTACT</span><small>문의</small></a></li>
+    </ul>
+    <p class="menu__mail"><a href="mailto:goodallduck@gmail.com">goodallduck@gmail.com</a></p>
   </nav>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#about"     onclick="closeMenu()">꾸더덕</a>
-    <a href="#creators"  onclick="closeMenu()">Creators</a>
-    <a href="#portfolio" onclick="closeMenu()">Portfolio</a>
-    <a href="#contact"   onclick="closeMenu()">Contact</a>
-  </div>
 
-  <!-- HERO — 풀스크린, 텍스트만 container로 여백 -->
-  <section id="home">
-    <div id="hero">
-      <div class="hero-media">
-        <div class="ph" style="width:100%;height:100%;"></div>
-        <div class="hero-grid"></div>
-        <div class="hero-media-label">
-          <span class="ph-label">Hero Video / Image</span>
-          <span class="ph-size">1920 × 1080</span>
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap hero__inner">
+        <div class="hero__copy">
+          <p class="sticker">VIDEO EDITING STUDIO</p>
+          <h1 class="hero__title">GOOD<br><em>ALL</em><br>DUCK</h1>
+          <div class="hero__actions">
+            <a href="#work" class="pill pill--orange pill--lg">작업 보기</a>
+            <a href="#contact" class="pill pill--lg">문의하기</a>
+          </div>
+        </div>
+        <div class="stack" aria-hidden="true">
+          <figure class="stack__card stack__card--1"><img src="assets/img/works/second-entry-1.webp" alt=""><figcaption>토크 예능</figcaption></figure>
+          <figure class="stack__card stack__card--2"><img src="assets/img/works/field-ep4.webp" alt=""><figcaption>인터뷰</figcaption></figure>
+          <figure class="stack__card stack__card--3"><img src="assets/img/works/sura-guam.webp" alt=""><figcaption>VLOG</figcaption></figure>
+          <span class="stack__dot stack__dot--a"></span><span class="stack__dot stack__dot--b"></span>
         </div>
       </div>
-      <div class="hero-gradient"></div>
-      <div class="hero-content">
-        <div class="container">
-          <p class="hero-eyebrow">Creative Agency · Seoul, Korea</p>
-          <h1 class="hero-h1">
-            콘텐츠로<br>세상을<br><span class="accent">움직이다</span>
-          </h1>
-          <p class="hero-sub">
-            꾸더덕은 유튜브 채널 운영부터 영상 제작까지,<br>
-            브랜드의 이야기를 가장 강렬하게 전달합니다.
-          </p>
-        </div>
-      </div>
-      <div class="hero-scroll">
-        <div class="scroll-bar"></div>Scroll
-      </div>
+    </section>
+
+    <div class="marquee marquee--orange" aria-hidden="true">
+      <div class="marquee__track"><span>EDIT</span><i>✦</i><span>SUBTITLE</span><i>✦</i><span>COLOR</span><i>✦</i><span>SOUND</span><i>✦</i><span>SHORTS</span><i>✦</i></div>
     </div>
-  </section>
 
-  <!-- ABOUT -->
-  <section class="section" id="about">
-    <div class="container">
-      <div class="about-grid">
-        <div class="reveal">
-          <p class="section-eyebrow">About GoodAllDuck</p>
-          <h2 class="section-h2">크리에이티브<br>에이전시 <span class="accent">꾸더덕</span></h2>
-          <p class="about-body">
-            꾸더덕(GoodAllDuck)은 자체 유튜브 채널 운영을 핵심 축으로,<br>
-            영상 제작 외주·이벤트 기획·온라인 마케팅을 아우르는 크리에이티브 에이전시입니다.<br>
-            장기적으로는 MCN 형태로 성장해 여러 크리에이터를 아우르는<br>
-            종합 미디어 기획사로 발전하는 것을 목표로 합니다.
-          </p>
-          <div class="about-stats">
-            <div class="stat-box">
-              <div class="stat-num">0<sup>+</sup></div>
-              <div class="stat-label">영상 제작 건수</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-num">0<sup>+</sup></div>
-              <div class="stat-label">파트너 브랜드</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-num">MCN</div>
-              <div class="stat-label">성장 목표</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-num">2026</div>
-              <div class="stat-label">설립 연도</div>
-            </div>
-          </div>
+    <!-- WORK -->
+    <section class="section" id="work">
+      <div class="wrap">
+        <div class="head">
+          <h2 class="head__title">WORK</h2>
+          <a href="work.html" class="pill">전체 보기 →</a>
         </div>
-        <div class="about-image reveal reveal-d2">
-          <div class="ph" style="width:100%;height:100%;">
-            <span class="ph-label">Brand Image</span>
-            <span class="ph-size">800 × 1000</span>
-          </div>
-        </div>
+        <div class="grid" data-works data-feature data-limit="5"></div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CREATORS -->
-  <section class="section" id="creators">
-    <div class="container">
-      <div class="section-header reveal">
-        <div>
-          <p class="section-eyebrow">Our Channels &amp; Partners</p>
-          <h2 class="section-h2">GoodAllDuck<br>Creators</h2>
+    <!-- REVIEW -->
+    <section class="section section--tint" id="review">
+      <div class="wrap">
+        <div class="head">
+          <h2 class="head__title">REVIEW</h2>
+          <p class="score"><b>5.0</b><span class="stars">★★★★★</span></p>
         </div>
-        <a href="#contact" class="text-link">
-          크리에이터 협업 문의 <span class="arr">→</span>
-        </a>
-      </div>
-      <div class="creators-featured reveal">
-        <div class="creator-featured-main">
-          <div class="ph" style="width:100%;height:100%;">
-            <span class="ph-label">Featured Channel</span>
-            <span class="ph-size">1280 × 720</span>
-          </div>
-          <div class="creator-card-caption">
-            <div class="creator-card-name">꾸더덕 공식 채널</div>
-            <div class="creator-card-sub">GoodAllDuck Official · YouTube</div>
-          </div>
-        </div>
-        <div class="creator-side-stack">
-          <div class="creator-side-card">
-            <div class="ph" style="width:100%;height:100%;min-height:160px;">
-              <span class="ph-label">Creator Channel</span>
-            </div>
-            <div class="creator-card-caption">
-              <div class="creator-card-name">크리에이터 채널명</div>
-              <div class="creator-card-sub">분야 · 구독자 수</div>
-            </div>
-          </div>
-          <div class="creator-side-card">
-            <div class="ph" style="width:100%;height:100%;min-height:160px;">
-              <span class="ph-label">Creator Channel</span>
-            </div>
-            <div class="creator-card-caption">
-              <div class="creator-card-name">크리에이터 채널명</div>
-              <div class="creator-card-sub">분야 · 구독자 수</div>
-            </div>
-          </div>
+        <div class="quotes">
+          <figure class="quote"><blockquote>알잘딱깔센의 정석이세요. 작업물도 빠르게 주시는데 실력도 최고입니다!</blockquote></figure>
+          <figure class="quote"><blockquote>저번 작업 때 너무 좋아서 또 진행했는데, 역시 빠르고 퀄리티 좋게 나왔습니다!</blockquote></figure>
+          <figure class="quote"><blockquote>빠르게 작업해주셨음에도 결과물이 너무 만족스럽습니다!</blockquote></figure>
         </div>
       </div>
-      <div class="creators-grid reveal">
-        <div class="creator-thumb">
-          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Creator</span></div>
-          <div class="creator-thumb-overlay"><span class="creator-thumb-label">크리에이터명</span></div>
-        </div>
-        <div class="creator-thumb">
-          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Creator</span></div>
-          <div class="creator-thumb-overlay"><span class="creator-thumb-label">크리에이터명</span></div>
-        </div>
-        <div class="creator-thumb">
-          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Creator</span></div>
-          <div class="creator-thumb-overlay"><span class="creator-thumb-label">크리에이터명</span></div>
-        </div>
-        <div class="creator-add">
-          <div class="creator-add-icon">+</div>
-          <div class="creator-add-label">협업 크리에이터</div>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- PORTFOLIO -->
-  <section class="section" id="portfolio">
-    <div class="container">
-      <div class="portfolio-header reveal">
-        <div>
-          <p class="section-eyebrow">Video Production</p>
-          <h2 class="section-h2">영상 제작<br>포트폴리오</h2>
-          <p class="portfolio-intro">
-            브랜드 홍보 영상부터 유튜브 콘텐츠, 숏폼, 모션 그래픽까지.<br>
-            목적에 맞는 영상으로 이야기를 완성합니다.
-          </p>
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="wrap contact">
+        <div class="contact__side">
+          <h2 class="head__title">CONTACT</h2>
+          <p class="contact__lead">편하게 남겨주세요.<br>확인 후 회신드릴게요.</p>
+          <a class="contact__mail" href="mailto:goodallduck@gmail.com">goodallduck@gmail.com</a>
         </div>
-        <a href="#contact" class="text-link" style="align-self:flex-start;margin-top:8px;">
-          제작 문의하기 <span class="arr">→</span>
-        </a>
+        <form class="form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact">
+          <p class="hp"><label>비워두세요 <input name="bot-field"></label></p>
+          <fieldset class="chips">
+            <legend>문의 유형</legend>
+            <label><input type="radio" name="type" value="영상 촬영 · 편집" checked><span>영상 촬영 · 편집</span></label>
+            <label><input type="radio" name="type" value="기타"><span>기타</span></label>
+          </fieldset>
+          <div class="form__row">
+            <label class="field"><span>이름 / 회사 *</span><input type="text" name="name" required autocomplete="name"></label>
+            <label class="field"><span>이메일 *</span><input type="email" name="email" required autocomplete="email"></label>
+          </div>
+          <div class="form__row">
+            <label class="field"><span>연락처</span><input type="tel" name="phone" autocomplete="tel"></label>
+            <label class="field"><span>희망 일정</span><input type="text" name="schedule" placeholder="예: 11월 말"></label>
+          </div>
+          <label class="field"><span>내용 *</span><textarea name="message" rows="4" required placeholder="영상 종류, 분량, 참고 링크"></textarea></label>
+          <label class="consent"><input type="checkbox" name="consent" required><span>문의 응대를 위한 개인정보 수집 · 이용에 동의합니다. <a href="privacy.html" target="_blank">자세히</a></span></label>
+          <button type="submit" class="pill pill--orange pill--lg form__submit">보내기</button>
+          <p class="form__status" role="status" aria-live="polite"></p>
+        </form>
       </div>
-      <div class="portfolio-grid reveal">
-        <div class="p-item">
-          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Video / Image</span><span class="ph-size">1920 × 1080</span></div>
-          <div class="p-overlay"><div class="p-cat">브랜드 영상</div><div class="p-title">브랜드 스토리 캠페인</div></div>
-        </div>
-        <div class="p-item">
-          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Video / Image</span></div>
-          <div class="p-overlay"><div class="p-cat">유튜브 콘텐츠</div><div class="p-title">채널 오프닝 시리즈</div></div>
-        </div>
-        <div class="p-item">
-          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Video / Image</span></div>
-          <div class="p-overlay"><div class="p-cat">숏폼</div><div class="p-title">쇼츠 캠페인</div></div>
-        </div>
-        <div class="p-item">
-          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Video / Image</span></div>
-          <div class="p-overlay"><div class="p-cat">인터뷰</div><div class="p-title">CEO 인터뷰 시리즈</div></div>
-        </div>
-        <div class="p-item">
-          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Video / Image</span></div>
-          <div class="p-overlay"><div class="p-cat">모션 그래픽</div><div class="p-title">브랜드 인트로 패키지</div></div>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <!-- CONTACT -->
-  <section class="section" id="contact">
-    <div class="container">
-      <div class="contact-inner">
-        <div class="reveal">
-          <p class="section-eyebrow">Get In Touch</p>
-          <h2 class="section-h2">함께<br>만들어요</h2>
-          <p class="contact-desc">
-            채널 운영, 영상 제작, 크리에이터 협업 등<br>
-            어떤 내용이든 편하게 연락주세요.
-          </p>
-        </div>
-        <div class="contact-info-list reveal reveal-d1">
-          <div class="contact-info-row">
-            <span class="ci-label">Email</span>
-            <span class="ci-value"><a href="mailto:goodallduck@gmail.com">goodallduck@gmail.com</a></span>
-          </div>
-          <div class="contact-info-row">
-            <span class="ci-label">Website</span>
-            <span class="ci-value"><a href="https://goodallduck.com" target="_blank">goodallduck.com</a></span>
-          </div>
-          <div class="contact-info-row">
-            <span class="ci-label">YouTube</span>
-            <span class="ci-value"><a href="https://www.youtube.com/channel/UC6eXBC1wz2XyBf4iTkvv3Kg" target="_blank">@goodallduck</a></span>
-          </div>
-          <div class="contact-info-row">
-            <span class="ci-label">Instagram</span>
-            <span class="ci-value"><a href="https://www.instagram.com/goodallduck/" target="_blank">@goodallduck</a></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-logo">꾸더덕 · GoodAllDuck</div>
-        <div class="footer-links">
-          <a href="#about">꾸더덕</a>
-          <a href="#creators">Creators</a>
-          <a href="#portfolio">Portfolio</a>
-          <a href="#contact">Contact</a>
-        </div>
-        <div class="footer-copy">© 2024 GoodAllDuck. All rights reserved.</div>
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <img src="assets/img/logo/logo.png" alt="꾸더덕 GoodAllDuck" width="72" height="73" class="footer__logo">
+      <dl class="biz">
+        <div><dt>상호</dt><dd>꾸더덕</dd></div>
+        <div><dt>대표</dt><dd>이민권</dd></div>
+        <div><dt>사업자등록번호</dt><dd>441-36-01704</dd></div>
+        <div><dt>전화</dt><dd><a href="tel:010-3893-3820">010-3893-3820</a></dd></div>
+        <div><dt>이메일</dt><dd><a href="mailto:goodallduck@gmail.com">goodallduck@gmail.com</a></dd></div>
+      </dl>
+      <div class="footer__end">
+        <a href="privacy.html" class="footer__privacy">개인정보처리방침</a>
+        <p>© 2026 GoodAllDuck</p>
       </div>
     </div>
   </footer>
 
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__panel">
+      <button class="modal__close" data-close aria-label="닫기"></button>
+      <div class="modal__video" id="modalVideo"></div>
+      <div class="modal__info">
+        <p class="tag" id="modalCat"></p>
+        <h3 class="modal__title" id="modalTitle"></h3>
+        <p class="meta" id="modalMeta"></p>
+        <p class="modal__desc" id="modalDesc"></p>
+        <a class="pill" id="modalLink" href="#" target="_blank" rel="noopener">YouTube에서 보기 ↗</a>
+      </div>
+    </div>
+  </div>
 
-  <script>
-    /* ---- Nav scroll ---- */
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('load', onScroll);
-
-    function onScroll() {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-      updateActiveLink();
-    }
-
-    /* ---- Active nav link ----
-       각 섹션의 상단이 뷰포트 기준으로 120px 이내에 들어오면 활성화.
-       페이지 맨 아래(contact)는 스크롤 바닥 감지로 강제 활성화.        */
-    const sectionIds = ['about', 'creators', 'portfolio', 'contact'];
-    const navLinks   = document.querySelectorAll('.nav-links a, .mobile-menu a');
-
-    function updateActiveLink() {
-      const scrollBottom = window.scrollY + window.innerHeight;
-      const docHeight    = document.documentElement.scrollHeight;
-      const nearBottom   = scrollBottom >= docHeight - 80;
-
-      let current = '';
-
-      if (nearBottom) {
-        current = 'contact';
-      } else {
-        sectionIds.forEach(id => {
-          const el = document.getElementById(id);
-          if (el && window.scrollY >= el.offsetTop - 120) current = id;
-        });
-      }
-
-      navLinks.forEach(a => {
-        const href = a.getAttribute('href').replace('#', '');
-        a.classList.toggle('active', href === current);
-      });
-    }
-
-    /* ---- Mobile menu ---- */
-    function toggleMenu(btn) {
-      const menu = document.getElementById('mobileMenu');
-      const open = menu.classList.toggle('open');
-      btn.classList.toggle('open', open);
-    }
-    function closeMenu() {
-      document.getElementById('mobileMenu').classList.remove('open');
-      document.getElementById('hamburger').classList.remove('open');
-    }
-
-    /* ---- Scroll reveal ---- */
-    const revealObs = new IntersectionObserver(
-      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }),
-      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
-    );
-    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-
-    /* ---- Form ---- */
-    function handleSubmit(e) {
-      e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      btn.textContent = 'Sent ✓';
-      btn.style.background = 'var(--white)';
-      btn.style.color = 'var(--bg)';
-      btn.disabled = true;
-      setTimeout(() => {
-        btn.textContent = 'Send Message →';
-        btn.style.background = '';
-        btn.style.color = '';
-        btn.disabled = false;
-        e.target.reset();
-      }, 4000);
-    }
-  </script>
+  <script src="assets/js/works.js?v=8"></script>
+  <script src="assets/js/main.js?v=8" defer></script>
 </body>
 </html>
