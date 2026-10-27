@@ -17,27 +17,27 @@ const WORKS = window.WORKS;
 const PAGES = [
   {
     file: "index.html", url: "/", priority: "1.0",
-    title: "꾸더덕 GoodAllDuck — 유튜브 · 인터뷰 · 브랜드 영상 편집",
-    desc: "유튜브 영상 편집 외주부터 인터뷰 · 토크 예능 · 브랜드 다큐 · VLOG까지. 촬영본 편집, 기획 · 촬영 · 편집을 맡기는 영상 편집 스튜디오 꾸더덕(GoodAllDuck).",
+    title: "꾸더덕 GoodAllDuck | 영상 편집 스튜디오",
+    desc: "유튜브 · 인터뷰 · 브랜드 영상 촬영과 편집. 꾸더덕(GoodAllDuck) 작업물을 보고 바로 문의하세요.",
   },
   {
     file: "work.html", url: "/work.html", priority: "0.9",
-    title: "작업물 — 꾸더덕 GoodAllDuck 영상 편집 포트폴리오",
-    desc: "토크 예능, 인터뷰 다큐, 브랜드 영상, 정보 콘텐츠, VLOG까지 꾸더덕이 편집한 유튜브 영상 포트폴리오.",
+    title: "작업물 | 꾸더덕 GoodAllDuck",
+    desc: "토크 예능 · 인터뷰 · 브랜드 영상 · VLOG 편집 포트폴리오.",
   },
   {
     file: "about.html", url: "/about.html", priority: "0.6",
-    title: "소개 — 꾸더덕 GoodAllDuck",
+    title: "소개 | 꾸더덕 GoodAllDuck",
     desc: "영상 편집 스튜디오 꾸더덕(GoodAllDuck)의 작업 장면 모음.",
   },
   {
     file: "contact.html", url: "/contact.html", priority: "0.8",
-    title: "문의 — 꾸더덕 GoodAllDuck 영상 편집 외주",
-    desc: "유튜브 · 인터뷰 · 브랜드 영상 촬영 및 편집 외주 문의. 남겨주시면 확인 후 회신드려요.",
+    title: "문의 | 꾸더덕 GoodAllDuck",
+    desc: "영상 촬영 · 편집 외주 문의. 남겨주시면 확인 후 회신드려요.",
   },
   {
     file: "privacy.html", url: "/privacy.html", priority: "0.2",
-    title: "개인정보처리방침 — 꾸더덕 GoodAllDuck",
+    title: "개인정보처리방침 | 꾸더덕 GoodAllDuck",
     desc: "꾸더덕 GoodAllDuck 개인정보처리방침.",
   },
 ];
@@ -52,7 +52,7 @@ const BUSINESS = {
   name: "꾸더덕",
   alternateName: "GoodAllDuck",
   url: `${SITE}/`,
-  logo: `${SITE}/assets/img/logo/logo@2x.png`,
+  logo: `${SITE}/assets/img/logo/favicon-512.png`,
   image: `${SITE}/assets/img/og.jpg`,
   email: "goodallduck@gmail.com",
   telephone: "+82-10-3893-3820",
@@ -64,7 +64,7 @@ function structuredData(page) {
   if (page.file === "index.html") {
     return jsonld({
       "@context": "https://schema.org",
-      "@graph": [BUSINESS, { "@type": "WebSite", "@id": `${SITE}/#website`, url: `${SITE}/`, name: "꾸더덕 GoodAllDuck", inLanguage: "ko-KR", publisher: { "@id": `${SITE}/#business` } }],
+      "@graph": [BUSINESS, { "@type": "WebSite", "@id": `${SITE}/#website`, url: `${SITE}/`, name: "꾸더덕", alternateName: ["GoodAllDuck", "꾸더덕 GoodAllDuck"], inLanguage: "ko-KR", publisher: { "@id": `${SITE}/#business` } }],
     });
   }
   if (page.file === "work.html") {
