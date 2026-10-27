@@ -113,8 +113,7 @@
   }, { rootMargin: "0px 0px -6% 0px", threshold: 0.06 });
   $$(".reveal").forEach((el, i) => { el.style.transitionDelay = `${(i % 2) * 90}ms`; io.observe(el); });
 
-  /* ---------- contact form (Netlify Forms) ---------- */
-  // select by name: Netlify strips data-netlify from the deployed HTML once it detects the form
+  /* ---------- contact form (Web3Forms → email to goodallduck@gmail.com) ---------- */
   $$('form[name="contact"]').forEach((form) => {
     const status = $(".form__status", form);
     form.addEventListener("submit", async (e) => {
@@ -125,12 +124,13 @@
       status.className = "form__status";
       status.textContent = "보내는 중…";
       try {
-        const res = await fetch("/", {
+        const res = await fetch(form.action, {
           method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: new URLSearchParams(new FormData(form)).toString(),
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(Object.fromEntries(new FormData(form))),
         });
-        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+        if (!res.ok || !data.success) throw new Error(data.message || res.status);
         form.reset();
         status.classList.add("is-ok");
         status.textContent = "접수됐어요! 확인 후 연락드릴게요.";
