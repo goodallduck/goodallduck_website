@@ -324,8 +324,25 @@ body.is-locked { overflow: hidden; }
 .cta__inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
 .cta__title { font-size: clamp(30px, 4.4vw, 56px); font-weight: 900; letter-spacing: -0.045em; }
 .footer { border-top: 2px solid var(--line); }
-.footer__inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 28px; padding-bottom: 28px; font-size: 14px; font-weight: 600; color: var(--sub); }
+.footer__inner { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 20px 40px; padding-top: 32px; padding-bottom: 32px; font-size: 13px; color: var(--sub); }
 .footer__logo { width: 64px; }
+.biz { display: flex; flex-wrap: wrap; gap: 6px 22px; }
+.biz div { display: flex; gap: 8px; }
+.biz dt { font-weight: 700; color: var(--ink); }
+.biz a:hover { color: var(--orange); }
+.footer__end { display: grid; gap: 6px; justify-items: end; }
+.footer__privacy { font-weight: 800; color: var(--ink); border-bottom: 2px solid var(--orange); }
+.consent a { color: var(--ink); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+
+/* ==============================================
+   PRIVACY
+=============================================== */
+.policy { max-width: 760px; }
+.policy__title { font-size: clamp(32px, 4vw, 48px); font-weight: 900; letter-spacing: -0.04em; margin-bottom: 8px; }
+.policy__date { color: var(--muted); font-weight: 600; margin-bottom: 36px; }
+.policy h2 { font-size: 19px; font-weight: 800; margin: 36px 0 10px; }
+.policy p, .policy li { color: var(--sub); line-height: 1.8; overflow-wrap: anywhere; }
+.policy ul { display: grid; gap: 4px; padding-left: 18px; list-style: disc; }
 
 /* ==============================================
    MODAL
@@ -385,6 +402,8 @@ body.is-locked { overflow: hidden; }
   .form__row { grid-template-columns: 1fr; }
   .form__submit { justify-self: stretch; }
   .facts div { grid-template-columns: 84px 1fr; }
+  .footer__inner { grid-template-columns: 1fr; }
+  .footer__end { justify-items: start; }
   .modal { padding: 0; align-items: end; }
   .modal__panel { border-radius: 22px 22px 0 0; max-height: 92svh; box-shadow: none; }
   .modal__info { padding: 20px 20px 26px; }
