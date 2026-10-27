@@ -3,930 +3,357 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>꾸더덕 — GoodAllDuck</title>
-  <meta name="description" content="뉴미디어 콘텐츠 제작과 크리에이터 매니지먼트 기반의 크리에이티브 에이전시">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    /* ==============================================
-       TOKENS
-    =============================================== */
-    :root {
-      --bg:      #0B0B0B;
-      --bg2:     #111111;
-      --bg3:     #1A1A1A;
-      --white:   #FFFFFF;
-      --gray1:   #BBBBBB;
-      --gray2:   #666666;
-      --gray3:   #2A2A2A;
-      --accent:  #FF8A00;
-      --border:  rgba(255,255,255,0.08);
-    }
-
-    /* ==============================================
-       RESET
-    =============================================== */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background: var(--bg);
-      color: var(--white);
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
-    a { text-decoration: none; color: inherit; }
-    ul { list-style: none; }
-    button { font-family: inherit; }
-
-    /* ==============================================
-       CONTAINER  — 콘텐츠 영역 최대 너비 + 좌우 여백
-    =============================================== */
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 80px;
-    }
-
-    /* ==============================================
-       PLACEHOLDER
-    =============================================== */
-    .ph {
-      background: var(--bg3);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      position: relative;
-      overflow: hidden;
-    }
-    /* 십자선 */
-    .ph::before, .ph::after {
-      content: '';
-      position: absolute;
-      background: var(--gray3);
-      pointer-events: none;
-    }
-    .ph::before { width: 1px; height: 36%; top: 32%; left: 50%; }
-    .ph::after  { width: 36%; height: 1px; top: 50%; left: 32%; }
-    .ph-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #444;
-      position: relative; z-index: 1;
-    }
-    .ph-size {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.55rem;
-      color: #333;
-      position: relative; z-index: 1;
-    }
-
-    /* ==============================================
-       NAVIGATION
-    =============================================== */
-    #nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      transition: background .35s, border-color .35s;
-      border-bottom: 1px solid transparent;
-    }
-    #nav.scrolled {
-      background: rgba(11, 11, 11, .94);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom-color: var(--border);
-    }
-    .nav-inner {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 80px;
-      height: 62px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      font-weight: 900;
-      font-size: 1.35rem;
-      letter-spacing: -0.03em;
-      color: var(--white);
-      flex-shrink: 0;
-    }
-    /* Links — right side */
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 40px;
-    }
-    .nav-links a {
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: rgba(255,255,255,.45);
-      letter-spacing: 0.03em;
-      transition: color .2s;
-      position: relative;
-      padding-bottom: 2px;
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px; left: 0; right: 100%;
-      height: 1px;
-      background: var(--accent);
-      transition: right .25s ease;
-    }
-    .nav-links a:hover { color: var(--white); }
-    .nav-links a:hover::after { right: 0; }
-    .nav-links a.active { color: var(--white); }
-    .nav-links a.active::after { right: 0; }
-
-    /* Hamburger (mobile only) */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 4px;
-    }
-    .hamburger span {
-      display: block;
-      width: 22px; height: 1.5px;
-      background: var(--white);
-      transition: .3s;
-    }
-    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-    /* Mobile menu */
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 62px; left: 0; right: 0;
-      z-index: 999;
-      background: rgba(11,11,11,.97);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      flex-direction: column;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      padding: 16px 32px;
-      font-size: .95rem;
-      font-weight: 600;
-      color: rgba(255,255,255,.7);
-      border-bottom: 1px solid var(--border);
-      transition: color .2s;
-    }
-    .mobile-menu a:last-child { border-bottom: none; }
-    .mobile-menu a:hover { color: var(--white); }
-    .mobile-menu a.active { color: var(--white); }
-
-    /* ==============================================
-       HERO — 풀스크린 (좌우 여백 없음)
-    =============================================== */
-    #hero {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      min-height: 600px;
-      overflow: hidden;
-    }
-    /* 미디어 영역: 화면 꽉 채움 */
-    .hero-media {
-      position: absolute;
-      inset: 0;
-    }
-    .hero-media .ph { width: 100%; height: 100%; background: var(--bg2); }
-    .hero-media .ph::before, .hero-media .ph::after { display: none; }
-    .hero-grid {
-      position: absolute; inset: 0; pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
-      background-size: 80px 80px;
-    }
-    .hero-media-label {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      pointer-events: none;
-    }
-    .hero-gradient {
-      position: absolute; inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(11,11,11,.12) 0%,
-        rgba(11,11,11,.0)  40%,
-        rgba(11,11,11,.6)  78%,
-        rgba(11,11,11,.9)  100%
-      );
-    }
-    /* 텍스트 영역: 컨테이너 기준 좌우 여백 */
-    .hero-content {
-      position: absolute;
-      bottom: 80px;
-      left: 0; right: 0;
-    }
-    .hero-content .container { /* 이미 container로 감싸므로 여백 자동 적용 */ }
-    .hero-eyebrow {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.45);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 28px; height: 1px;
-      background: rgba(255,255,255,.3);
-    }
-    .hero-h1 {
-      font-size: clamp(3.2rem, 7vw, 8rem);
-      font-weight: 900;
-      line-height: 1.06;
-      letter-spacing: -0.025em;
-    }
-    .hero-h1 .accent { color: var(--accent); }
-    .hero-sub {
-      margin-top: 24px;
-      font-size: clamp(0.9rem, 1.3vw, 1.05rem);
-      font-weight: 300;
-      color: rgba(255,255,255,.65);
-      line-height: 1.85;
-      max-width: 480px;
-    }
-    .hero-scroll {
-      position: absolute;
-      bottom: 36px; right: 80px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.3);
-    }
-    .scroll-bar { width: 36px; height: 1px; background: rgba(255,255,255,.2); }
-
-    /* ==============================================
-       SECTION — 공통 구조 (container 안에서 여백)
-    =============================================== */
-    .section { padding: 120px 0; }
-    .section-eyebrow {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gray1);
-      margin-bottom: 18px;
-    }
-    .section-h2 {
-      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
-      font-weight: 900;
-      line-height: 1.1;
-      letter-spacing: -0.025em;
-    }
-    .section-h2 .accent { color: var(--accent); }
-    .text-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.4);
-      transition: color .2s;
-    }
-    .text-link .arr { transition: transform .2s; }
-    .text-link:hover { color: var(--white); }
-    .text-link:hover .arr { transform: translateX(4px); }
-
-    /* ==============================================
-       ABOUT
-    =============================================== */
-    #about { background: var(--bg2); }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-    .about-body {
-      margin-top: 28px;
-      font-size: 1rem;
-      font-weight: 300;
-      line-height: 2;
-      color: rgba(255,255,255,.68);
-    }
-    .about-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      margin-top: 52px;
-      border-top: 1px solid var(--border);
-      border-left: 1px solid var(--border);
-    }
-    .stat-box {
-      padding: 28px 24px;
-      border-bottom: 1px solid var(--border);
-      border-right: 1px solid var(--border);
-    }
-    .stat-num {
-      font-family: 'Inter', sans-serif;
-      font-size: 2.4rem;
-      font-weight: 800;
-      line-height: 1;
-      color: var(--white);
-    }
-    .stat-num sup { font-size: 1rem; color: var(--accent); margin-left: 2px; }
-    .stat-label {
-      font-size: 0.78rem;
-      font-weight: 400;
-      color: var(--gray1);
-      margin-top: 10px;
-      line-height: 1.4;
-    }
-    .about-image { aspect-ratio: 3/4; }
-    .about-image .ph { width: 100%; height: 100%; }
-
-    /* ==============================================
-       CREATORS
-    =============================================== */
-    #creators { background: var(--bg); }
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 52px;
-    }
-    .creators-featured {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 14px;
-      margin-bottom: 14px;
-    }
-    .creator-featured-main {
-      aspect-ratio: 16/9;
-      position: relative;
-      overflow: hidden;
-    }
-    .creator-featured-main .ph { width: 100%; height: 100%; }
-    .creator-side-stack { display: grid; grid-template-rows: 1fr 1fr; gap: 14px; }
-    .creator-side-card { position: relative; overflow: hidden; }
-    .creator-side-card .ph { width: 100%; height: 100%; min-height: 150px; }
-    .creator-card-caption {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 16px 18px;
-      background: linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 100%);
-    }
-    .creator-card-name { font-size: .88rem; font-weight: 700; }
-    .creator-card-sub {
-      font-size: .72rem;
-      color: rgba(255,255,255,.5);
-      margin-top: 3px;
-      font-family: 'Inter', sans-serif;
-    }
-    .creators-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-    }
-    .creator-thumb {
-      aspect-ratio: 1;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
-    .creator-thumb .ph { width: 100%; height: 100%; }
-    .creator-thumb-overlay {
-      position: absolute; inset: 0;
-      background: rgba(11,11,11,0);
-      transition: background .3s;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .creator-thumb:hover .creator-thumb-overlay { background: rgba(11,11,11,.6); }
-    .creator-thumb-label {
-      font-size: .75rem;
-      font-weight: 700;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: all .25s;
-      letter-spacing: .02em;
-    }
-    .creator-thumb:hover .creator-thumb-label { opacity: 1; transform: translateY(0); }
-    .creator-add {
-      aspect-ratio: 1;
-      border: 1px dashed var(--gray3);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 10px; cursor: pointer;
-      transition: border-color .2s;
-    }
-    .creator-add:hover { border-color: var(--gray2); }
-    .creator-add-icon { font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 300; color: var(--gray2); line-height: 1; }
-    .creator-add-label { font-family: 'Inter', sans-serif; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray2); }
-
-    /* ==============================================
-       PORTFOLIO
-    =============================================== */
-    #portfolio { background: var(--bg2); }
-    .portfolio-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 52px;
-    }
-    .portfolio-intro {
-      max-width: 500px;
-      font-size: .95rem;
-      font-weight: 300;
-      color: rgba(255,255,255,.6);
-      line-height: 1.85;
-      margin-top: 18px;
-    }
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 12px;
-    }
-    .p-item {
-      position: relative; overflow: hidden; cursor: pointer;
-    }
-    .p-item .ph { width: 100%; height: 100%; min-height: 80px; }
-    .p-item:nth-child(1) { grid-column: span 7; aspect-ratio: 16/9; }
-    .p-item:nth-child(2) { grid-column: span 5; aspect-ratio: 4/3; }
-    .p-item:nth-child(3) { grid-column: span 4; aspect-ratio: 4/3; }
-    .p-item:nth-child(4) { grid-column: span 4; aspect-ratio: 4/3; }
-    .p-item:nth-child(5) { grid-column: span 4; aspect-ratio: 4/3; }
-    .p-overlay {
-      position: absolute; inset: 0;
-      background: rgba(11,11,11,0);
-      transition: background .3s;
-      display: flex; flex-direction: column; justify-content: flex-end; padding: 20px;
-    }
-    .p-item:hover .p-overlay { background: rgba(11,11,11,.72); }
-    .p-cat {
-      font-family: 'Inter', sans-serif; font-size: .65rem; font-weight: 600;
-      letter-spacing: .14em; text-transform: uppercase; color: var(--accent);
-      opacity: 0; transform: translateY(8px); transition: all .25s .05s;
-    }
-    .p-title {
-      font-size: .9rem; font-weight: 700; margin-top: 4px;
-      opacity: 0; transform: translateY(8px); transition: all .25s;
-    }
-    .p-item:hover .p-cat,
-    .p-item:hover .p-title { opacity: 1; transform: translateY(0); }
-
-    /* ==============================================
-       CONTACT
-    =============================================== */
-    #contact { background: var(--bg); }
-    .contact-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 100px;
-      align-items: start;
-    }
-    .contact-desc {
-      margin-top: 24px;
-      font-size: .95rem;
-      font-weight: 300;
-      line-height: 1.95;
-      color: rgba(255,255,255,.62);
-    }
-    .contact-info-list {
-      margin-top: 48px;
-      border-top: 1px solid var(--border);
-    }
-    .contact-info-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 18px 0; border-bottom: 1px solid var(--border);
-    }
-    .ci-label {
-      font-family: 'Inter', sans-serif; font-size: .65rem; font-weight: 600;
-      letter-spacing: .15em; text-transform: uppercase; color: var(--gray1);
-    }
-    .ci-value {
-      font-size: .9rem; font-weight: 500;
-      color: var(--white);
-    }
-    .ci-value a {
-      color: var(--white);
-      transition: color .2s;
-    }
-    .ci-value a:hover { color: var(--accent); }
-
-    /* ==============================================
-       FOOTER
-    =============================================== */
-    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 40px 0; }
-    .footer-inner {
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
-    }
-    .footer-logo { font-size: 1.05rem; font-weight: 900; letter-spacing: -0.02em; }
-    .footer-links { display: flex; gap: 28px; }
-    .footer-links a {
-      font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 500;
-      letter-spacing: .05em; color: var(--gray2); transition: color .2s;
-    }
-    .footer-links a:hover { color: var(--white); }
-    .footer-copy { font-family: 'Inter', sans-serif; font-size: .68rem; color: var(--gray2); }
-
-    /* ==============================================
-       SCROLL REVEAL
-    =============================================== */
-    .reveal {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity .7s ease, transform .7s ease;
-    }
-    .reveal.on { opacity: 1; transform: translateY(0); }
-    .reveal-d1 { transition-delay: .1s; }
-    .reveal-d2 { transition-delay: .2s; }
-
-    /* ==============================================
-       RESPONSIVE
-    =============================================== */
-    @media (max-width: 1200px) {
-      .container { padding: 0 48px; }
-      .nav-inner { padding: 0 48px; }
-      .hero-scroll { right: 48px; }
-    }
-    @media (max-width: 900px) {
-      .container { padding: 0 24px; }
-      .nav-inner { padding: 0 24px; }
-      .hero-scroll { display: none; }
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-      .about-grid { grid-template-columns: 1fr; }
-      .about-image { display: none; }
-      .creators-featured { grid-template-columns: 1fr; }
-      .creator-side-stack { grid-template-rows: unset; grid-template-columns: 1fr 1fr; }
-      .creator-side-card .ph { min-height: 120px; }
-      .creators-grid { grid-template-columns: repeat(2, 1fr); }
-      .portfolio-grid { grid-template-columns: 1fr 1fr; }
-      .p-item { grid-column: span 1 !important; aspect-ratio: 16/9 !important; }
-      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
-      .section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
-      .portfolio-header { flex-direction: column; align-items: flex-start; gap: 16px; }
-    }
-    @media (max-width: 600px) {
-      .section { padding: 80px 0; }
-      .hero-content { bottom: 48px; }
-      .about-stats { grid-template-columns: 1fr 1fr; }
-      .creators-grid { grid-template-columns: 1fr 1fr; }
-      .footer-inner { flex-direction: column; align-items: flex-start; }
-      .footer-links { flex-wrap: wrap; gap: 16px; }
-      .mobile-menu a { padding: 14px 24px; }
-    }
-  </style>
+  <title>꾸더덕 — 영상 제작 스튜디오</title>
+  <meta name="description" content="꾸더덕은 인터뷰, 토크 예능, 브랜드 영상, VLOG까지 기획부터 편집까지 함께하는 영상 제작 스튜디오입니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="꾸더덕 — 영상 제작 스튜디오">
+  <meta property="og:description" content="끝까지 보게 만드는 영상을 만듭니다. 인터뷰 · 토크 예능 · VLOG 편집과 제작.">
+  <meta property="og:image" content="https://goodallduck.com/assets/img/og.jpg">
+  <meta property="og:url" content="https://goodallduck.com">
+  <meta name="theme-color" content="#0B0B0B">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="assets/css/style.css?v=3">
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav id="nav">
-    <div class="nav-inner">
-      <a href="#home" class="nav-logo">꾸더덕</a>
-      <ul class="nav-links">
-        <li><a href="#about">꾸더덕</a></li>
-        <li><a href="#creators">Creators</a></li>
-        <li><a href="#portfolio">Portfolio</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <div class="hamburger" id="hamburger" onclick="toggleMenu(this)">
-        <span></span><span></span><span></span>
-      </div>
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <div class="container nav__inner">
+      <a href="#top" class="logo" aria-label="꾸더덕 홈">
+        <span class="logo__ko">꾸더덕</span>
+        <span class="logo__en">GoodAllDuck</span>
+      </a>
+      <nav class="nav__links" id="navLinks" aria-label="주요 메뉴">
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#review">Review</a>
+        <a href="#contact" class="nav__cta">프로젝트 문의</a>
+      </nav>
+      <button class="nav__toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span>
+      </button>
     </div>
-  </nav>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#about"     onclick="closeMenu()">꾸더덕</a>
-    <a href="#creators"  onclick="closeMenu()">Creators</a>
-    <a href="#portfolio" onclick="closeMenu()">Portfolio</a>
-    <a href="#contact"   onclick="closeMenu()">Contact</a>
-  </div>
+  </header>
 
-  <!-- HERO — 풀스크린, 텍스트만 container로 여백 -->
-  <section id="home">
-    <div id="hero">
-      <div class="hero-media">
-        <div class="ph" style="width:100%;height:100%;"></div>
-        <div class="hero-grid"></div>
-        <div class="hero-media-label">
-          <span class="ph-label">Hero Video / Image</span>
-          <span class="ph-size">1920 × 1080</span>
-        </div>
-      </div>
-      <div class="hero-gradient"></div>
-      <div class="hero-content">
-        <div class="container">
-          <p class="hero-eyebrow">Creative Agency · Seoul, Korea</p>
-          <h1 class="hero-h1">
-            콘텐츠로<br>세상을<br><span class="accent">움직이다</span>
-          </h1>
-          <p class="hero-sub">
-            꾸더덕은 유튜브 채널 운영부터 영상 제작까지,<br>
-            브랜드의 이야기를 가장 강렬하게 전달합니다.
-          </p>
-        </div>
-      </div>
-      <div class="hero-scroll">
-        <div class="scroll-bar"></div>Scroll
-      </div>
-    </div>
-  </section>
+  <main id="top">
 
-  <!-- ABOUT -->
-  <section class="section" id="about">
-    <div class="container">
-      <div class="about-grid">
-        <div class="reveal">
-          <p class="section-eyebrow">About GoodAllDuck</p>
-          <h2 class="section-h2">크리에이티브<br>에이전시 <span class="accent">꾸더덕</span></h2>
-          <p class="about-body">
-            꾸더덕(GoodAllDuck)은 자체 유튜브 채널 운영을 핵심 축으로,<br>
-            영상 제작 외주·이벤트 기획·온라인 마케팅을 아우르는 크리에이티브 에이전시입니다.<br>
-            장기적으로는 MCN 형태로 성장해 여러 크리에이터를 아우르는<br>
-            종합 미디어 기획사로 발전하는 것을 목표로 합니다.
-          </p>
-          <div class="about-stats">
-            <div class="stat-box">
-              <div class="stat-num">0<sup>+</sup></div>
-              <div class="stat-label">영상 제작 건수</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-num">0<sup>+</sup></div>
-              <div class="stat-label">파트너 브랜드</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-num">MCN</div>
-              <div class="stat-label">성장 목표</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-num">2026</div>
-              <div class="stat-label">설립 연도</div>
-            </div>
-          </div>
-        </div>
-        <div class="about-image reveal reveal-d2">
-          <div class="ph" style="width:100%;height:100%;">
-            <span class="ph-label">Brand Image</span>
-            <span class="ph-size">800 × 1000</span>
-          </div>
-        </div>
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-label="소개">
+      <div class="hero__media" aria-hidden="true">
+        <div class="hero__slide is-active" style="background-image:url('assets/img/hero/h1.webp')" data-caption="필드 밖 인터뷰 EP.4"></div>
+        <div class="hero__slide" style="background-image:url('assets/img/hero/h2.webp')" data-caption="두 번째 엔트리 · 농구 1편"></div>
+        <div class="hero__slide" style="background-image:url('assets/img/hero/h3.webp')" data-caption="필드 밖 인터뷰 EP.3"></div>
+        <div class="hero__slide" style="background-image:url('assets/img/hero/h4.webp')" data-caption="SURA WORLD · 괌 VLOG"></div>
       </div>
-    </div>
-  </section>
+      <div class="hero__shade" aria-hidden="true"></div>
 
-  <!-- CREATORS -->
-  <section class="section" id="creators">
-    <div class="container">
-      <div class="section-header reveal">
-        <div>
-          <p class="section-eyebrow">Our Channels &amp; Partners</p>
-          <h2 class="section-h2">GoodAllDuck<br>Creators</h2>
-        </div>
-        <a href="#contact" class="text-link">
-          크리에이터 협업 문의 <span class="arr">→</span>
-        </a>
+      <div class="viewfinder" aria-hidden="true">
+        <span class="vf vf--tl"></span><span class="vf vf--tr"></span><span class="vf vf--bl"></span><span class="vf vf--br"></span>
+        <div class="hud hud--rec"><i></i>REC</div>
+        <div class="hud hud--tc" id="timecode">00:00:00:00</div>
       </div>
-      <div class="creators-featured reveal">
-        <div class="creator-featured-main">
-          <div class="ph" style="width:100%;height:100%;">
-            <span class="ph-label">Featured Channel</span>
-            <span class="ph-size">1280 × 720</span>
-          </div>
-          <div class="creator-card-caption">
-            <div class="creator-card-name">꾸더덕 공식 채널</div>
-            <div class="creator-card-sub">GoodAllDuck Official · YouTube</div>
-          </div>
-        </div>
-        <div class="creator-side-stack">
-          <div class="creator-side-card">
-            <div class="ph" style="width:100%;height:100%;min-height:160px;">
-              <span class="ph-label">Creator Channel</span>
-            </div>
-            <div class="creator-card-caption">
-              <div class="creator-card-name">크리에이터 채널명</div>
-              <div class="creator-card-sub">분야 · 구독자 수</div>
-            </div>
-          </div>
-          <div class="creator-side-card">
-            <div class="ph" style="width:100%;height:100%;min-height:160px;">
-              <span class="ph-label">Creator Channel</span>
-            </div>
-            <div class="creator-card-caption">
-              <div class="creator-card-name">크리에이터 채널명</div>
-              <div class="creator-card-sub">분야 · 구독자 수</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="creators-grid reveal">
-        <div class="creator-thumb">
-          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Creator</span></div>
-          <div class="creator-thumb-overlay"><span class="creator-thumb-label">크리에이터명</span></div>
-        </div>
-        <div class="creator-thumb">
-          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Creator</span></div>
-          <div class="creator-thumb-overlay"><span class="creator-thumb-label">크리에이터명</span></div>
-        </div>
-        <div class="creator-thumb">
-          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Creator</span></div>
-          <div class="creator-thumb-overlay"><span class="creator-thumb-label">크리에이터명</span></div>
-        </div>
-        <div class="creator-add">
-          <div class="creator-add-icon">+</div>
-          <div class="creator-add-label">협업 크리에이터</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- PORTFOLIO -->
-  <section class="section" id="portfolio">
-    <div class="container">
-      <div class="portfolio-header reveal">
-        <div>
-          <p class="section-eyebrow">Video Production</p>
-          <h2 class="section-h2">영상 제작<br>포트폴리오</h2>
-          <p class="portfolio-intro">
-            브랜드 홍보 영상부터 유튜브 콘텐츠, 숏폼, 모션 그래픽까지.<br>
-            목적에 맞는 영상으로 이야기를 완성합니다.
-          </p>
-        </div>
-        <a href="#contact" class="text-link" style="align-self:flex-start;margin-top:8px;">
-          제작 문의하기 <span class="arr">→</span>
-        </a>
-      </div>
-      <div class="portfolio-grid reveal">
-        <div class="p-item">
-          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Video / Image</span><span class="ph-size">1920 × 1080</span></div>
-          <div class="p-overlay"><div class="p-cat">브랜드 영상</div><div class="p-title">브랜드 스토리 캠페인</div></div>
-        </div>
-        <div class="p-item">
-          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Video / Image</span></div>
-          <div class="p-overlay"><div class="p-cat">유튜브 콘텐츠</div><div class="p-title">채널 오프닝 시리즈</div></div>
-        </div>
-        <div class="p-item">
-          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Video / Image</span></div>
-          <div class="p-overlay"><div class="p-cat">숏폼</div><div class="p-title">쇼츠 캠페인</div></div>
-        </div>
-        <div class="p-item">
-          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Video / Image</span></div>
-          <div class="p-overlay"><div class="p-cat">인터뷰</div><div class="p-title">CEO 인터뷰 시리즈</div></div>
-        </div>
-        <div class="p-item">
-          <div class="ph" style="width:100%;height:100%;"><span class="ph-label">Video / Image</span></div>
-          <div class="p-overlay"><div class="p-cat">모션 그래픽</div><div class="p-title">브랜드 인트로 패키지</div></div>
+      <div class="container hero__content">
+        <p class="kicker reveal">Video Production Studio</p>
+        <h1 class="hero__title reveal">끝까지 보게 만드는<br>영상을 만듭니다</h1>
+        <p class="hero__lead reveal">인터뷰, 토크 예능, 브랜드 영상, VLOG까지. <br class="br-pc">촬영본 편집부터 기획 · 촬영 · 편집 원스톱까지 함께합니다.</p>
+        <div class="hero__actions reveal">
+          <a href="#work" class="btn btn--solid">작업 보기</a>
+          <a href="#contact" class="btn btn--ghost">프로젝트 문의</a>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- CONTACT -->
-  <section class="section" id="contact">
-    <div class="container">
-      <div class="contact-inner">
-        <div class="reveal">
-          <p class="section-eyebrow">Get In Touch</p>
-          <h2 class="section-h2">함께<br>만들어요</h2>
-          <p class="contact-desc">
-            채널 운영, 영상 제작, 크리에이터 협업 등<br>
-            어떤 내용이든 편하게 연락주세요.
-          </p>
-        </div>
-        <div class="contact-info-list reveal reveal-d1">
-          <div class="contact-info-row">
-            <span class="ci-label">Email</span>
-            <span class="ci-value"><a href="mailto:goodallduck@gmail.com">goodallduck@gmail.com</a></span>
-          </div>
-          <div class="contact-info-row">
-            <span class="ci-label">Website</span>
-            <span class="ci-value"><a href="https://goodallduck.com" target="_blank">goodallduck.com</a></span>
-          </div>
-          <div class="contact-info-row">
-            <span class="ci-label">YouTube</span>
-            <span class="ci-value"><a href="https://www.youtube.com/channel/UC6eXBC1wz2XyBf4iTkvv3Kg" target="_blank">@goodallduck</a></span>
-          </div>
-          <div class="contact-info-row">
-            <span class="ci-label">Instagram</span>
-            <span class="ci-value"><a href="https://www.instagram.com/goodallduck/" target="_blank">@goodallduck</a></span>
-          </div>
-        </div>
+      <div class="container hero__foot">
+        <p class="now"><span>Now showing</span><strong id="nowCaption">필드 밖 인터뷰 EP.4</strong></p>
+        <a href="#work" class="scroll" aria-label="작업물로 이동">Scroll</a>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-logo">꾸더덕 · GoodAllDuck</div>
-        <div class="footer-links">
-          <a href="#about">꾸더덕</a>
-          <a href="#creators">Creators</a>
-          <a href="#portfolio">Portfolio</a>
-          <a href="#contact">Contact</a>
-        </div>
-        <div class="footer-copy">© 2024 GoodAllDuck. All rights reserved.</div>
+    <!-- ============ CLIENTS ============ -->
+    <section class="clients" aria-label="함께한 클라이언트">
+      <div class="container clients__inner">
+        <p class="clients__label">Clients</p>
+        <ul class="clients__list">
+          <li>대한체육회 선수진로지원센터</li>
+          <li>수라 월드 SURA WORLD</li>
+          <li>마케팅 대행사 (크몽)</li>
+        </ul>
       </div>
+    </section>
+
+    <!-- ============ WORK ============ -->
+    <section class="section work" id="work">
+      <div class="container">
+        <div class="section__head">
+          <div>
+            <p class="kicker reveal">Selected Work</p>
+            <h2 class="section__title reveal">작업물</h2>
+          </div>
+          <div class="filters reveal" role="tablist" aria-label="작업 분류">
+            <button class="filter is-active" data-filter="all" role="tab" aria-selected="true">전체</button>
+            <button class="filter" data-filter="talk" role="tab" aria-selected="false">토크 예능</button>
+            <button class="filter" data-filter="interview" role="tab" aria-selected="false">인터뷰 다큐</button>
+            <button class="filter" data-filter="vlog" role="tab" aria-selected="false">VLOG</button>
+          </div>
+        </div>
+
+        <div class="grid" id="workGrid">
+          <article class="card card--feature reveal" data-cat="talk" data-yt="cX60--ny6Vg"
+            data-title="코트 밖에선 뭐하세요? 농구 1편" data-series="두 번째 엔트리" data-client="대한체육회 선수진로지원센터"
+            data-meta="편집 · 2026.10 · 9:19"
+            data-desc="은퇴 후 새 길을 걷는 농구 선수 출신 3인과 현역 선수 1인이 자기소개서를 쓰며 선수 시절을 돌아보는 토크 콘텐츠입니다. 네 사람의 대화를 리액션 중심으로 다듬고, 예능 자막 · 화면 분할 · 인물 이력 그래픽으로 웃음과 정보를 함께 살렸습니다.">
+            <button class="card__media" aria-label="두 번째 엔트리 농구 1편 영상 재생">
+              <img src="assets/img/works/second-entry-1.webp" alt="두 번째 엔트리 농구 1편 — 네 명의 출연자가 둘러앉아 대화하는 장면" loading="lazy" width="1280" height="720">
+              <img class="card__alt" src="assets/img/works/second-entry-1-alt.webp" alt="" loading="lazy" width="960" height="540">
+              <span class="play" aria-hidden="true"></span>
+            </button>
+            <div class="card__body">
+              <p class="card__cat">토크 예능 · 대한체육회 선수진로지원센터</p>
+              <h3 class="card__title">두 번째 엔트리 — 코트 밖에선 뭐하세요? 농구 1편</h3>
+              <p class="card__meta">편집 · 2026.10 · 9:19</p>
+            </div>
+          </article>
+
+          <article class="card reveal" data-cat="talk" data-yt="zlNf0exexe8"
+            data-title="코트 밖에선 뭐하세요? 농구 2편" data-series="두 번째 엔트리" data-client="대한체육회 선수진로지원센터"
+            data-meta="편집 · 2026.10 · 11:09"
+            data-desc="밸런스 게임과 실전 모의 면접으로 이어지는 2부 구성입니다. A/B 선택 그래픽과 VS 자막으로 게임의 긴장감을 살리고, 하이라이트 오프닝과 매끄러운 코너 전환으로 11분 분량을 끝까지 따라가도록 편집했습니다.">
+            <button class="card__media" aria-label="두 번째 엔트리 농구 2편 영상 재생">
+              <img src="assets/img/works/second-entry-2.webp" alt="두 번째 엔트리 농구 2편 — VS 자막이 들어간 장면" loading="lazy" width="1280" height="720">
+              <img class="card__alt" src="assets/img/works/second-entry-2-alt.webp" alt="" loading="lazy" width="960" height="540">
+              <span class="play" aria-hidden="true"></span>
+            </button>
+            <div class="card__body">
+              <p class="card__cat">토크 예능 · 대한체육회 선수진로지원센터</p>
+              <h3 class="card__title">두 번째 엔트리 — 농구 2편</h3>
+              <p class="card__meta">편집 · 2026.10 · 11:09</p>
+            </div>
+          </article>
+
+          <article class="card reveal" data-cat="interview" data-yt="hvKFZ2EsZR4"
+            data-title="태권도 선수 윤성준, 인테리어 대표가 되다" data-series="필드 밖 인터뷰 EP.3" data-client="대한체육회 선수진로지원센터"
+            data-meta="편집 · 2026.09 · 5:55"
+            data-desc="태권도 국가대표 출신에서 인테리어 업체 운영자로 진로를 바꾼 윤성준 선수의 인터뷰입니다. 답변을 '선수 시절 → 진로 고민 → 새로운 일 → 후배에게'의 흐름으로 정리하고, 도장과 현장 B-roll을 교차해 이야기에 리듬을 더했습니다.">
+            <button class="card__media" aria-label="필드 밖 인터뷰 EP.3 영상 재생">
+              <img src="assets/img/works/field-ep3.webp" alt="필드 밖 인터뷰 EP.3 — 국가대표 검은 띠 클로즈업과 타이틀" loading="lazy" width="1280" height="720">
+              <img class="card__alt" src="assets/img/works/field-ep3-alt.webp" alt="" loading="lazy" width="960" height="540">
+              <span class="play" aria-hidden="true"></span>
+            </button>
+            <div class="card__body">
+              <p class="card__cat">인터뷰 다큐 · 대한체육회 선수진로지원센터</p>
+              <h3 class="card__title">필드 밖 인터뷰 EP.3 — 태권도 선수 윤성준</h3>
+              <p class="card__meta">편집 · 2026.09 · 5:55</p>
+            </div>
+          </article>
+
+          <article class="card reveal" data-cat="interview" data-yt="y1DKgvss6Qw"
+            data-title="다이빙 선수 고현아, 체육회 행정가가 되다" data-series="필드 밖 인터뷰 EP.4" data-client="대한체육회 선수진로지원센터"
+            data-meta="편집 · 2026.10 · 5:57"
+            data-desc="다이빙 선수에서 제주특별자치도체육회 행정 직원이 된 고현아 선수의 인터뷰입니다. 질문 타이틀 카드로 챕터를 나누고, 수영장 · 훈련장 · 사무실 B-roll을 엮어 선수에서 행정가로 이어지는 변화를 보여 주었습니다.">
+            <button class="card__media" aria-label="필드 밖 인터뷰 EP.4 영상 재생">
+              <img src="assets/img/works/field-ep4.webp" alt="필드 밖 인터뷰 EP.4 — 수영장을 배경으로 한 인터뷰 장면" loading="lazy" width="1280" height="720">
+              <img class="card__alt" src="assets/img/works/field-ep4-alt.webp" alt="" loading="lazy" width="960" height="540">
+              <span class="play" aria-hidden="true"></span>
+            </button>
+            <div class="card__body">
+              <p class="card__cat">인터뷰 다큐 · 대한체육회 선수진로지원센터</p>
+              <h3 class="card__title">필드 밖 인터뷰 EP.4 — 다이빙 선수 고현아</h3>
+              <p class="card__meta">편집 · 2026.10 · 5:57</p>
+            </div>
+          </article>
+
+          <article class="card reveal" data-cat="vlog" data-yt="VQk5wPf2Tgs"
+            data-title="오또리들의 Y2K 컨셉 여행기" data-series="SURA WORLD" data-client="수라 월드 SURA WORLD"
+            data-meta="편집 · 2024.07 · 12:23"
+            data-desc="DJ SURA와 친구들의 Y2K 컨셉 여행 VLOG입니다. 전달받은 촬영본을 예능 흐름으로 재구성하고, 클라이언트가 요청한 Y2K 무드에 맞춰 컬러 자막, 프레임, 효과음으로 장면마다 캐릭터를 살렸습니다.">
+            <button class="card__media" aria-label="Y2K 컨셉 여행 VLOG 영상 재생">
+              <img src="assets/img/works/sura-y2k.webp" alt="Y2K 컨셉 여행 VLOG — 컬러 자막이 들어간 장면" loading="lazy" width="1280" height="720">
+              <img class="card__alt" src="assets/img/works/sura-y2k-alt.webp" alt="" loading="lazy" width="960" height="540">
+              <span class="play" aria-hidden="true"></span>
+            </button>
+            <div class="card__body">
+              <p class="card__cat">예능 VLOG · 수라 월드 SURA WORLD</p>
+              <h3 class="card__title">오또리들의 Y2K 컨셉 여행기</h3>
+              <p class="card__meta">편집 · 2024.07 · 12:23</p>
+            </div>
+          </article>
+
+          <article class="card reveal" data-cat="vlog" data-yt="97S9TTtGtpI"
+            data-title="일 말고 여행은 처음이야, 그것도 괌?" data-series="SURA WORLD" data-client="수라 월드 SURA WORLD"
+            data-meta="편집 · 2025.10 · 7:14"
+            data-desc="DJ SURA의 괌 생일 여행과 뷰티 루틴을 담은 VLOG입니다. 여행의 감성적인 흐름 속에 브랜드 협업 제품 소개를 자연스럽게 녹이고, 감성 자막과 리듬감 있는 컷으로 휴가의 무드를 살렸습니다.">
+            <button class="card__media" aria-label="괌 여행 VLOG 영상 재생">
+              <img src="assets/img/works/sura-guam.webp" alt="괌 여행 VLOG — 노을 진 바다를 배경으로 한 장면" loading="lazy" width="1280" height="720">
+              <img class="card__alt" src="assets/img/works/sura-guam-alt.webp" alt="" loading="lazy" width="960" height="540">
+              <span class="play" aria-hidden="true"></span>
+            </button>
+            <div class="card__body">
+              <p class="card__cat">브랜디드 VLOG · 수라 월드 SURA WORLD</p>
+              <h3 class="card__title">일 말고 여행은 처음이야, 그것도 괌?</h3>
+              <p class="card__meta">편집 · 2025.10 · 7:14</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SERVICES ============ -->
+    <section class="section services" id="services">
+      <div class="container">
+        <div class="section__head">
+          <div>
+            <p class="kicker reveal">Services</p>
+            <h2 class="section__title reveal">이런 작업을 맡겨주세요</h2>
+          </div>
+        </div>
+
+        <ol class="svc">
+          <li class="svc__item reveal">
+            <span class="svc__no">01</span>
+            <h3 class="svc__name">영상 편집</h3>
+            <p class="svc__desc">촬영본만 보내주세요. 컷 편집부터 자막, 사운드, 색보정까지 완성된 영상으로 만들어 드립니다.</p>
+            <p class="svc__tags">유튜브 · VLOG · 행사 스케치</p>
+          </li>
+          <li class="svc__item reveal">
+            <span class="svc__no">02</span>
+            <h3 class="svc__name">토크 · 예능 콘텐츠</h3>
+            <p class="svc__desc">여러 명이 함께하는 토크와 예능형 콘텐츠에 맞춰 리액션 중심 컷, 예능 자막, 화면 구성을 설계합니다.</p>
+            <p class="svc__tags">멀티캠 편집 · 예능 자막 · 코너 구성</p>
+          </li>
+          <li class="svc__item reveal">
+            <span class="svc__no">03</span>
+            <h3 class="svc__name">인터뷰 · 브랜드 영상</h3>
+            <p class="svc__desc">인물과 브랜드의 이야기를 흐름 있게 구성하고, B-roll과 타이틀 그래픽으로 신뢰감 있는 영상을 완성합니다.</p>
+            <p class="svc__tags">인터뷰 다큐 · 브랜드 필름 · 기획 · 촬영</p>
+          </li>
+          <li class="svc__item reveal">
+            <span class="svc__no">04</span>
+            <h3 class="svc__name">숏폼</h3>
+            <p class="svc__desc">쇼츠와 릴스에 맞는 세로 영상을 빠른 호흡으로 편집합니다. 긴 영상을 숏폼으로 재가공하는 작업도 가능합니다.</p>
+            <p class="svc__tags">YouTube Shorts · Instagram Reels</p>
+          </li>
+        </ol>
+
+        <div class="process reveal">
+          <p class="process__label">작업 과정</p>
+          <ol class="process__steps">
+            <li><span>01</span>문의</li>
+            <li><span>02</span>상담 · 견적</li>
+            <li><span>03</span>구성 · 편집</li>
+            <li><span>04</span>피드백 · 수정</li>
+            <li><span>05</span>최종 납품</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ REVIEW ============ -->
+    <section class="section review" id="review">
+      <div class="container">
+        <div class="section__head">
+          <div>
+            <p class="kicker reveal">Review</p>
+            <h2 class="section__title reveal">다시 찾아주시는 이유</h2>
+          </div>
+          <p class="review__score reveal"><strong>5.0</strong><span>크몽 리뷰 평점 · 재구매 고객</span></p>
+        </div>
+
+        <div class="quotes">
+          <figure class="quote reveal">
+            <blockquote>저번 작업이 너무 마음에 들어서 또 진행했습니다! 알잘딱깔센의 정석이세요. 작업물도 빠르게 주시는데 실력도 최고입니다!!</blockquote>
+            <figcaption><span class="stars" aria-label="별점 5점">★★★★★</span>대행사 · 에이전시 고객 · 2026.10</figcaption>
+          </figure>
+          <figure class="quote reveal">
+            <blockquote>저번 작업 때 너무 좋아서 또 진행한 건데 역시 빠르고 퀄리티 좋게 나왔습니다! 감사합니다!!</blockquote>
+            <figcaption><span class="stars" aria-label="별점 5점">★★★★★</span>대행사 · 에이전시 고객 · 2026.09</figcaption>
+          </figure>
+          <figure class="quote reveal">
+            <blockquote>빠르게 작업해주셨음에도 너무 결과물 만족스럽습니다!</blockquote>
+            <figcaption><span class="stars" aria-label="별점 5점">★★★★★</span>대행사 · 에이전시 고객 · 2026.09</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section contact" id="contact">
+      <div class="container contact__inner">
+        <div class="contact__intro">
+          <p class="kicker reveal">Contact</p>
+          <h2 class="section__title reveal">프로젝트를<br>이야기해 주세요</h2>
+          <p class="contact__lead reveal">어떤 영상인지, 언제까지 필요한지만 알려주셔도 충분해요.<br>내용을 확인한 뒤 남겨주신 연락처로 회신드릴게요.</p>
+          <dl class="contact__info reveal">
+            <div><dt>Email</dt><dd><a href="mailto:goodallduck@gmail.com">goodallduck@gmail.com</a></dd></div>
+            <div><dt>Instagram</dt><dd><a href="https://www.instagram.com/goodallduck/" target="_blank" rel="noopener">@goodallduck</a></dd></div>
+          </dl>
+        </div>
+
+        <form class="form reveal" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contactForm">
+          <input type="hidden" name="form-name" value="contact">
+          <p class="hp"><label>이 칸은 비워두세요 <input name="bot-field"></label></p>
+
+          <div class="form__row">
+            <label class="field"><span>이름 / 회사명 <em>*</em></span><input type="text" name="name" required autocomplete="name"></label>
+            <label class="field"><span>이메일 <em>*</em></span><input type="email" name="email" required autocomplete="email"></label>
+          </div>
+          <div class="form__row">
+            <label class="field"><span>연락처</span><input type="tel" name="phone" autocomplete="tel" placeholder="선택"></label>
+            <label class="field"><span>문의 유형</span>
+              <select name="type">
+                <option>영상 편집</option>
+                <option>토크 · 예능 콘텐츠</option>
+                <option>인터뷰 · 브랜드 영상</option>
+                <option>숏폼</option>
+                <option>기타</option>
+              </select>
+            </label>
+          </div>
+          <div class="form__row">
+            <label class="field"><span>희망 일정</span><input type="text" name="schedule" placeholder="예: 11월 말 공개 예정"></label>
+            <label class="field"><span>예산</span>
+              <select name="budget">
+                <option>미정 · 상담 후 결정</option>
+                <option>50만 원 미만</option>
+                <option>50 – 100만 원</option>
+                <option>100 – 300만 원</option>
+                <option>300만 원 이상</option>
+              </select>
+            </label>
+          </div>
+          <label class="field"><span>문의 내용 <em>*</em></span><textarea name="message" rows="5" required placeholder="영상 종류, 분량, 참고 영상 링크 등을 적어주세요."></textarea></label>
+          <label class="consent"><input type="checkbox" name="consent" required> 문의 응대를 위한 개인정보(이름, 연락처, 이메일) 수집 · 이용에 동의합니다.</label>
+          <button type="submit" class="btn btn--solid form__submit">문의 보내기</button>
+          <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a href="#top" class="logo"><span class="logo__ko">꾸더덕</span><span class="logo__en">GoodAllDuck</span></a>
+      <p class="footer__copy">© 2026 꾸더덕 GoodAllDuck. All rights reserved.</p>
     </div>
   </footer>
 
+  <!-- ============ VIDEO MODAL ============ -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__panel">
+      <button class="modal__close" data-close aria-label="닫기"></button>
+      <div class="modal__video" id="modalVideo"></div>
+      <div class="modal__info">
+        <p class="card__cat" id="modalSeries"></p>
+        <h3 class="modal__title" id="modalTitle"></h3>
+        <p class="card__meta" id="modalMeta"></p>
+        <p class="modal__desc" id="modalDesc"></p>
+        <a class="modal__link" id="modalLink" href="#" target="_blank" rel="noopener">YouTube에서 보기 ↗</a>
+      </div>
+    </div>
+  </div>
 
-  <script>
-    /* ---- Nav scroll ---- */
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('load', onScroll);
-
-    function onScroll() {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-      updateActiveLink();
-    }
-
-    /* ---- Active nav link ----
-       각 섹션의 상단이 뷰포트 기준으로 120px 이내에 들어오면 활성화.
-       페이지 맨 아래(contact)는 스크롤 바닥 감지로 강제 활성화.        */
-    const sectionIds = ['about', 'creators', 'portfolio', 'contact'];
-    const navLinks   = document.querySelectorAll('.nav-links a, .mobile-menu a');
-
-    function updateActiveLink() {
-      const scrollBottom = window.scrollY + window.innerHeight;
-      const docHeight    = document.documentElement.scrollHeight;
-      const nearBottom   = scrollBottom >= docHeight - 80;
-
-      let current = '';
-
-      if (nearBottom) {
-        current = 'contact';
-      } else {
-        sectionIds.forEach(id => {
-          const el = document.getElementById(id);
-          if (el && window.scrollY >= el.offsetTop - 120) current = id;
-        });
-      }
-
-      navLinks.forEach(a => {
-        const href = a.getAttribute('href').replace('#', '');
-        a.classList.toggle('active', href === current);
-      });
-    }
-
-    /* ---- Mobile menu ---- */
-    function toggleMenu(btn) {
-      const menu = document.getElementById('mobileMenu');
-      const open = menu.classList.toggle('open');
-      btn.classList.toggle('open', open);
-    }
-    function closeMenu() {
-      document.getElementById('mobileMenu').classList.remove('open');
-      document.getElementById('hamburger').classList.remove('open');
-    }
-
-    /* ---- Scroll reveal ---- */
-    const revealObs = new IntersectionObserver(
-      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }),
-      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
-    );
-    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-
-    /* ---- Form ---- */
-    function handleSubmit(e) {
-      e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      btn.textContent = 'Sent ✓';
-      btn.style.background = 'var(--white)';
-      btn.style.color = 'var(--bg)';
-      btn.disabled = true;
-      setTimeout(() => {
-        btn.textContent = 'Send Message →';
-        btn.style.background = '';
-        btn.style.color = '';
-        btn.disabled = false;
-        e.target.reset();
-      }, 4000);
-    }
-  </script>
+  <script src="assets/js/main.js?v=3" defer></script>
 </body>
 </html>
