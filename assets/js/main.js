@@ -40,9 +40,9 @@
      Order matters: logo (2x2) + 3 wide (2x2) + 8 small tiles pack a 4-column grid
      with no gaps (6 rows), and a 2-column grid on mobile (9 rows). */
   const COLLAGE = [
-    ["second-entry-1", "", true], ["field-ep3", ""], ["sura-y2k", ""],
-    ["field-ep4", "", true], ["second-entry-2", ""], ["sura-guam", "-alt"],
-    ["sura-guam", "", true], ["second-entry-1", "-alt"], ["field-ep4", "-alt"], ["field-ep3", "-alt"], ["sura-y2k", "-alt"],
+    ["hancar-daejeon", "", true], ["field-ep3", ""], ["sura-y2k", ""],
+    ["second-entry-1", "", true], ["hancar-history", ""], ["hancar-tint", ""],
+    ["sura-guam", "", true], ["field-ep4", ""], ["hancar-replace", ""], ["second-entry-2", ""], ["hancar-chip", ""],
   ];
   $$("[data-collage]").forEach((box) => {
     const works = window.WORKS || [];
