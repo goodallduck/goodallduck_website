@@ -108,7 +108,7 @@ function seoBlock(page) {
     `  <meta property="og:image:width" content="1200">`,
     `  <meta property="og:image:height" content="630">`,
     `  <meta name="twitter:card" content="summary_large_image">`,
-    page.file === "index.html" ? `  <meta name="naver-site-verification" content="c0a416e65801107c5c44584fbc269c45fd031a7d">` : "",
+    page.file === "index.html" ? `  <meta name="naver-site-verification" content="66c2295ad22017e2be7737741a48fdfb081b8bb4">` : "",
     structuredData(page),
     "  <!-- seo:end -->",
   ].filter(Boolean).join("\n");
