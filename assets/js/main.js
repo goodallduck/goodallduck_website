@@ -92,7 +92,8 @@
   $$(".reveal").forEach((el, i) => { el.style.transitionDelay = `${(i % 2) * 90}ms`; io.observe(el); });
 
   /* ---------- contact form (Netlify Forms) ---------- */
-  $$("form[data-netlify]").forEach((form) => {
+  // select by name: Netlify strips data-netlify from the deployed HTML once it detects the form
+  $$('form[name="contact"]').forEach((form) => {
     const status = $(".form__status", form);
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
