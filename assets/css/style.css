@@ -391,6 +391,12 @@ body.is-locked { overflow: hidden; }
 =============================================== */
 @media (max-width: 960px) {
   .hero__inner { grid-template-columns: 1fr; }
+  /* single column: center the copy and let the wordmark fill the width */
+  .hero__copy { text-align: center; }
+  .sticker { font-size: 15px; padding: 10px 20px; margin-bottom: 30px; }
+  .hero__title { font-size: min(25vw, 160px); margin-bottom: 36px; }
+  .hero__title em { margin-right: -.12em; } /* cancel trailing letter-spacing so ALL sits centered */
+  .hero__actions { justify-content: center; }
   .stack { max-width: 520px; width: 100%; margin: 0 auto; }
   .quotes { grid-template-columns: 1fr; gap: 32px; }
   .quote:nth-child(n) { transform: none; }
@@ -405,6 +411,8 @@ body.is-locked { overflow: hidden; }
   .menu-btn span:last-child { top: 24px; }
   .menu-open .menu-btn span:first-child, .menu-open .menu-btn span:last-child { top: 19.5px; }
   .header__cta { height: 40px; padding: 0 14px; font-size: 14px; }
+  .hero { padding-top: 28px; }
+  .hero__actions .pill { flex: 1 1 0; padding: 0 16px; height: 60px; font-size: 18px; }
   .grid { grid-template-columns: 1fr; }
   .grid .card--feature .card__media { aspect-ratio: 16 / 9; }
   .form__row { grid-template-columns: 1fr; }
